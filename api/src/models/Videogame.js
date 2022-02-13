@@ -23,7 +23,7 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false,
       unique: true,
       primaryKey: true,
