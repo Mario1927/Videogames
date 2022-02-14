@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize');
+const {DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
     // Model's definition
@@ -7,12 +7,12 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         unique: true,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
       },
       name: {
           type: DataTypes.STRING,
-          allowNull: false, 
-          unique: true
+          unique: true,
       }
     });
 };

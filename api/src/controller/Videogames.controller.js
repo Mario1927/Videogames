@@ -2,7 +2,6 @@ require('dotenv').config();
 const {API_KEY} = process.env;
 const axios = require('axios');
 const { Videogame, Genre } = require('../db.js');
-const validator = require('validator');
 
 const getAllGames = async (req, res, next) => {
     if(req.query.name){
@@ -63,9 +62,8 @@ const getAllGames = async (req, res, next) => {
 
 const getGameDetail = async (req, res, next) => {
     const id = req.params.idVideogame;
-    const isUUID = validator.isUUID(id);
 
-    if(isUUID) {
+    if(id.includes('-')) {
         try {
             const requestBD = await Videogame.findOne({
                 where: {
@@ -107,7 +105,30 @@ const getGameDetail = async (req, res, next) => {
     };
 };
 
+const createGame = async (req, res, next) => {
+    const {name, description, image, released, rating, genres, platforms} = req.query;
+    
+    const createdGame = await Videogame.create({
+        name, 
+        description,
+        image,
+        released,
+        rating,
+        platforms,
+        created: true
+    });
+
+    genres.split(', ').map(async genre => {
+        console.log(genre)
+        const genreBD = await Genre.findOne({where: {name: genre}});
+        await createdGame.addGenre(genreBD);
+    });
+
+    return res.sendStatus(200);
+}
+
 module.exports = {
     getGameDetail,
-    getAllGames
+    getAllGames,
+    createGame
 }
