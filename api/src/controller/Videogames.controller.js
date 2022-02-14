@@ -11,7 +11,7 @@ const getAllGames = async (req, res, next) => {
     
             if(requestAPI || requestBD) {
                 
-                const request_formated = requestAPI.data.results?.map(game => {
+                const requestFormated = requestAPI.data.results?.map(game => {
                     return {
                         name: game.name,
                         image: game.background_image,
@@ -21,7 +21,7 @@ const getAllGames = async (req, res, next) => {
                     }
                 });
     
-                const results = [...request_formated, requestBD]
+                const results = [...requestFormated, requestBD]
     
                 return res.json(results);
             }
@@ -33,21 +33,29 @@ const getAllGames = async (req, res, next) => {
         }
     }else {
         try {
-            const requestAPI = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}`);
+            var requestAPI = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}`);
             const requestBD = await Videogame.findAll({include: Genre});
 
             if(requestAPI || requestBD) {
-                const request_formated = requestAPI.data.results?.map(game => {
-                    return {
-                        name: game.name,
-                        image: game.background_image,
-                        id: game.id,
-                        genres: game.genres.map(genre => genre.name),
-                        created: false
-                    }
-                });
 
-                const results = [...request_formated, requestBD]
+                let responseAPI = []; let requestFormated = [];
+
+                while (responseAPI.length < 100 && requestAPI.data.results) {
+                    
+                    requestFormated = requestAPI.data.results.map(game => {
+                        return {
+                            name: game.name,
+                            image: game.background_image,
+                            id: game.id,
+                            genres: game.genres.map(genre => genre.name),
+                            created: false
+                        }
+                    });
+                    responseAPI = [...responseAPI, ...requestFormated];
+                    requestAPI = await axios.get(requestAPI.data.next);
+                }
+                
+                const results = [...responseAPI, ...requestBD];
 
                 return res.json(results);
             }
@@ -84,7 +92,7 @@ const getGameDetail = async (req, res, next) => {
             const requestAPI = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`);
             if(requestAPI) {
                 const {name, description, background_image, released, rating, genres, platforms, id} = requestAPI.data;        
-                const request_formated = {
+                const requestFormated = {
                     name,
                     description,
                     image: background_image,
@@ -95,7 +103,7 @@ const getGameDetail = async (req, res, next) => {
                     id,
                     created: false
                 };
-                return res.json(request_formated);
+                return res.json(requestFormated);
             } else {
                 return res.json('API Error');
             };
