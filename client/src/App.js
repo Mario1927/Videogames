@@ -1,10 +1,14 @@
 import './App.css';
+import Games from './components/Videogames/Games';
+import { BrowserRouter } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Henry Videogames</h1>
+    <div>
+      <h1>Hola</h1>
+      <Games/>
     </div>
+   
   );
 }
 
