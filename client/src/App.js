@@ -1,14 +1,14 @@
 import './App.css';
 import Games from './components/Videogames/Games';
-import { BrowserRouter } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
+import GameDetail from './components/Videogames/GameDetail';
 
 function App() {
   return (
-    <div>
-      <h1>Hola</h1>
-      <Games/>
-    </div>
-   
+      <Routes>
+        <Route path='/games' element={<Games/>} />
+        <Route path='/games/:idCiudad' element={<GameDetail/>}/>
+      </Routes>
   );
 }
 

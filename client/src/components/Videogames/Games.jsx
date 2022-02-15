@@ -13,7 +13,7 @@ export default function Games() {
 
     return (
         <div>
-            {state.length? state.map(game => <Game name={game.name} image={game.image} genres={game.genres.toString()} />) : <h2>Loading</h2>}
+            {state.length ? state.map(game => <Game key={game.id} name={game.name} image={game.image} genres={game.genres.join(', ')} id={game.id} />) : <h2>Loading</h2>}
         </div>
     )
 }
