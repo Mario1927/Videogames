@@ -2,7 +2,7 @@ import { GET_ALL_GAMES, GET_GAMES_BY_NAME, GET_GAME_BY_ID, GET_ALL_GENRES } from
 
 const initialState = {
     games: [],
-    gameDetail: [],
+    gameDetail: {},
     gamesByName: [],
     genres: []
 }

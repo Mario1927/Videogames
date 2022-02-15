@@ -111,7 +111,7 @@ const getGameDetail = async (req, res, next) => {
                 include: Genre
             });
             if(requestBD) {
-                res.json(...requestBD)
+                res.json(requestBD)
             }else {
                 res.json('Not found on Database')
             };
