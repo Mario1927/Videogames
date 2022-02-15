@@ -8,7 +8,7 @@ const getAllGames = async (req, res, next) => {
         try {
             const requestAPI = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&search=${req.query.name}`);
             const requestBD = await Videogame.findAll({include: Genre});
-    
+
             if(requestAPI || requestBD) {
                 
                 const requestFormated = requestAPI.data.results?.map(game => {
@@ -20,8 +20,24 @@ const getAllGames = async (req, res, next) => {
                         created: false
                     }
                 });
+
+                const responseBD = requestBD?.filter(game => {
+                    
+                    if(game.name.includes(req.query.name)){
+                        return {
+                            name: game.name,
+                            description: game.description,
+                            releasedDate: game.releaseDate,
+                            rating: game.rating,
+                            platforms: game.platforms,
+                            created: game.created,
+                            genres: game.genres?.map(genre => genre.name),
+                            image: ''
+                        }
+                    }
+                })
     
-                const results = [...requestFormated, requestBD]
+                const results = [...requestFormated, ...responseBD]
     
                 return res.json(results);
             }
@@ -34,7 +50,7 @@ const getAllGames = async (req, res, next) => {
     }else {
         try {
             var requestAPI = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}`);
-            const requestBD = await Videogame.findAll({include: Genre});
+            var requestBD = await Videogame.findAll({include: Genre});
 
             if(requestAPI || requestBD) {
 
@@ -54,8 +70,23 @@ const getAllGames = async (req, res, next) => {
                     responseAPI = [...responseAPI, ...requestFormated];
                     requestAPI = await axios.get(requestAPI.data.next);
                 }
+
+                const responseBD = requestBD?.map(game => {
+                    game.genres.map(name => console.log(name.name));
+                    
+                    return {
+                        name: game.name,
+                        description: game.description,
+                        releasedDate: game.releaseDate,
+                        rating: game.rating,
+                        platforms: game.platforms,
+                        created: game.created,
+                        genres: game.genres?.map(genre => genre.name),
+                        image: ''
+                    }
+                })
                 
-                const results = [...responseAPI, ...requestBD];
+                const results = [...responseAPI, ...responseBD];
 
                 return res.json(results);
             }
@@ -127,13 +158,12 @@ const createGame = async (req, res, next) => {
     });
 
     genres.split(', ').map(async genre => {
-        console.log(genre)
         const genreBD = await Genre.findOne({where: {name: genre}});
         await createdGame.addGenre(genreBD);
     });
 
     return res.sendStatus(200);
-}
+};
 
 module.exports = {
     getGameDetail,
