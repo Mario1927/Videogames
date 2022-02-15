@@ -72,7 +72,6 @@ const getAllGames = async (req, res, next) => {
                 }
 
                 const responseBD = requestBD?.map(game => {
-                    game.genres.map(name => console.log(name.name));
                     
                     return {
                         name: game.name,
@@ -82,7 +81,8 @@ const getAllGames = async (req, res, next) => {
                         platforms: game.platforms,
                         created: game.created,
                         genres: game.genres?.map(genre => genre.name),
-                        image: ''
+                        image: '',
+                        id: game.id
                     }
                 })
                 
@@ -104,14 +104,31 @@ const getGameDetail = async (req, res, next) => {
 
     if(id.includes('-')) {
         try {
+            
             const requestBD = await Videogame.findOne({
                 where: {
                     id: id
                 },
                 include: Genre
             });
+
+            var responseBD = []; responseBD.push(requestBD)
+            
             if(requestBD) {
-                res.json(requestBD)
+                responseBD = responseBD.map(game => {
+                    return {
+                        name: game.name,
+                        description: game.description,
+                        releasedDate: game.releaseDate,
+                        rating: game.rating,
+                        platforms: game.platforms,
+                        created: game.created,
+                        genres: game.genres.map(genre => genre.name).join(', '),
+                        image,
+                        id: game.id
+                    }
+                })
+                res.json(...responseBD)  
             }else {
                 res.json('Not found on Database')
             };
@@ -122,15 +139,15 @@ const getGameDetail = async (req, res, next) => {
         try {
             const requestAPI = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`);
             if(requestAPI) {
-                const {name, description, background_image, released, rating, genres, platforms, id} = requestAPI.data;        
+                const {name, description_raw, background_image, released, rating, genres, platforms, id} = requestAPI.data;        
                 const requestFormated = {
                     name,
-                    description,
+                    description: description_raw,
                     image: background_image,
                     releaseDate: released,
                     rating,
-                    genres: genres.map(genre => genre.name),
-                    platforms: platforms.map(p => p.platform.name),
+                    genres: genres.map(genre => genre.name).join(', '),
+                    platforms: platforms.map(p => p.platform.name).join(', '),
                     id,
                     created: false
                 };
