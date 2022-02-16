@@ -4,3 +4,5 @@ export const GET_GAME_BY_ID = 'GET_GAME_BY_ID';
 export const GET_ALL_GENRES = 'GET_ALL_GENRES';
 export const FILTER_BY_GENRE = 'FILTER_BY_GENRE';
 export const FILTER_BY_CREATOR = 'FILTER_BY_CREATOR';
+export const ORDER_BY_NAME = 'ORDER_BY_NAME';
+export const ORDER_BY_RATING = 'ORDER_BY_RATING';
