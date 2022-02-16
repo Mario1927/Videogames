@@ -1,5 +1,5 @@
 import axios from "axios"
-import { GET_ALL_GAMES, GET_GAMES_BY_NAME, GET_GAME_BY_ID, GET_ALL_GENRES } from '../types/types.js'
+import { GET_ALL_GAMES, GET_GAMES_BY_NAME, GET_GAME_BY_ID, GET_ALL_GENRES, FILTER_BY_GENRE, FILTER_BY_CREATOR } from '../types/types.js'
 
 export function getGames() {
     return async function(dispatch) {
@@ -26,5 +26,21 @@ export function getGenres() {
     return async function(dispatch) {
         const response = await axios.get(`http://localhost:3001/genres`)
         return dispatch({type: GET_ALL_GENRES, payload: response.data})
+    }
+}
+
+export function filterGamesByGenre(payload) {
+    return function(dispatch) {
+        return dispatch({
+            type: FILTER_BY_GENRE, payload
+        })
+    }
+}
+
+export function filterGamesByCreator(payload) {
+    return function(dispatch) {
+        return dispatch({
+            type: FILTER_BY_CREATOR, payload
+        })
     }
 }
