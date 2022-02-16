@@ -1,13 +1,18 @@
 require('dotenv').config();
 const {API_KEY} = process.env;
 const axios = require('axios');
+const { Op } = require('sequelize');
 const { Videogame, Genre } = require('../db.js');
 
 const getAllGames = async (req, res, next) => {
     if(req.query.name){
         try {
             const requestAPI = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&search=${req.query.name}`);
-            const requestBD = await Videogame.findAll({include: Genre});
+            const requestBD = await Videogame.findAll({where: {
+                name: {
+                    [Op.iLike]: `%${req.query.name}%`
+                } 
+            }, include: Genre});
 
             if(requestAPI || requestBD) {
                 
@@ -21,23 +26,21 @@ const getAllGames = async (req, res, next) => {
                     }
                 });
 
-                const responseBD = requestBD?.filter(game => {
-                    
-                    if(game.name.includes(req.query.name)){
-                        return {
-                            name: game.name,
-                            description: game.description,
-                            releasedDate: game.releaseDate,
-                            rating: game.rating,
-                            platforms: game.platforms,
-                            created: game.created,
-                            genres: game.genres?.map(genre => genre.name),
-                            image: ''
-                        }
+                const responseBD = requestBD?.map(game => {
+                    return {
+                        name: game.name,
+                        description: game.description,
+                        releasedDate: game.releaseDate,
+                        rating: game.rating,
+                        platforms: game.platforms,
+                        created: game.created,
+                        genres: game.genres.map(genre => genre.name),
+                        image: '',
+                        id: game.id
                     }
-                })
+                });
     
-                const results = [...requestFormated, ...responseBD]
+                const results = [...responseBD, ...requestFormated]
     
                 return res.json(results);
             }
@@ -86,7 +89,7 @@ const getAllGames = async (req, res, next) => {
                     }
                 })
                 
-                const results = [...responseAPI, ...responseBD];
+                const results = [...responseBD, ...responseAPI];
 
                 return res.json(results);
             }
@@ -124,7 +127,7 @@ const getGameDetail = async (req, res, next) => {
                         platforms: game.platforms,
                         created: game.created,
                         genres: game.genres.map(genre => genre.name).join(', '),
-                        image,
+                        image: '',
                         id: game.id
                     }
                 })
