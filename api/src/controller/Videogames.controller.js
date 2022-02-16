@@ -22,6 +22,7 @@ const getAllGames = async (req, res, next) => {
                         image: game.background_image,
                         id: game.id,
                         genres: game.genres.map(genre => genre.name),
+                        rating: game.rating,
                         created: false
                     }
                 });
@@ -67,6 +68,7 @@ const getAllGames = async (req, res, next) => {
                             image: game.background_image,
                             id: game.id,
                             genres: game.genres.map(genre => genre.name),
+                            rating: game.rating,
                             created: false
                         }
                     });
