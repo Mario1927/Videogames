@@ -6,7 +6,9 @@ const initialState = {
     gamesByName: [],
     allGames: [],
     genres: [],
-    filters: {created: 'All', genres: 'All'}
+    filters: {filteredByCreator: 'All', filteredByGenre: 'All'},
+    filteredByCreator: [],
+    filteredByGenre: []
 }
 
 function rootReducer(state = initialState, action) {
@@ -51,17 +53,25 @@ function rootReducer(state = initialState, action) {
             }
         case FILTER_BY_CREATOR:
             var filteredByCreator = action.payload === 'All' ? state.allGames : state.allGames.filter(game => game.created.toString() === action.payload);
-            filteredByCreator = filteredByCreator.filter(game => state.filters.genres !== 'All' ? game.genres.includes(state.filters.genres) : game);
+            var resultByCreator = filteredByCreator;
+
+            for (let key in state.filters) {
+                if(key !== 'filteredByCreator' && state.filters[key] !== 'All') resultByCreator = resultByCreator.filter(g => state[key].some(g2 => g2.id === g.id));
+            }
 
             return {
-                ...state, games: filteredByCreator, filters: {...state.filters, created: action.payload} 
+                ...state, games: resultByCreator, filteredByCreator, filters: {...state.filters, filteredByCreator: action.payload} 
             }
         case FILTER_BY_GENRE:
             var filteredByGenre = action.payload === 'All' ? state.allGames : state.allGames.filter(game => game.genres.includes(action.payload));
-            filteredByGenre = filteredByGenre.filter(game => state.filters.created !== 'All' ? game.created.toString() === state.filters.created : game);
-
+            var resultByGenre = filteredByGenre;
+            
+            for (let key in state.filters) {
+                if(key !== 'filteredByGenre' && state.filters[key] !== 'All') resultByGenre = resultByGenre.filter(g => state[key].some(g2 => g2.id === g.id));
+            }
+            
             return {
-                ...state, games: filteredByGenre, filters: {...state.filters, genres: action.payload} 
+                ...state, games: resultByGenre, filteredByGenre, filters: {...state.filters, filteredByGenre: action.payload}
             }
         default:
             return state
