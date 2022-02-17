@@ -5,6 +5,7 @@ import GameDetail from './components/Videogames/GameDetail/GameDetail';
 import LandingPage from './components/LandingPage/LandingPage';
 import NavBar from './components/NavBar/NavBar';
 import GamesByName from './components/Videogames/GamesByName/GamesByName';
+import Pagination from './components/Pagination/Pagination';
 
 function App() {
   return (
