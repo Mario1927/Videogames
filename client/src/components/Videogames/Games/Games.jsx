@@ -1,18 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Game from "../GameCard/Game";
 import { useSelector, useDispatch } from "react-redux";
-import { filterGamesByCreator, filterGamesByGenre, getGames, getGenres, sortGamesByName, sortGamesByRating } from '../../../actions/index'; 
+import { filterGamesByCreator, filterGamesByGenre, getGames, getGenres, sortGamesByName, sortGamesByRating } from '../../../actions/index';
+import Pagination from "../../Pagination/Pagination";
 
 export default function Games() {
     const dispatch = useDispatch();
     const games = useSelector(state => state.games)
     const genres = useSelector(state => state.genres)
-    // const sorted = useSelector(state => state)
+    const [currentPage, setCurrentPage] = useState(1);
+    const [gamesPerPage] = useState(15);
 
     useEffect(() => {
         dispatch(getGenres())
         dispatch(getGames())
     }, [dispatch]);
+
+    
+
+    const indexOfLastGame = currentPage * gamesPerPage;
+    const indexOfFirstGame = indexOfLastGame - gamesPerPage;
+    const currentGames = games.slice(indexOfFirstGame, indexOfLastGame);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     function handlerSortByName(event) {
         dispatch(sortGamesByName(event.target.value))
@@ -38,6 +48,7 @@ export default function Games() {
 
     return (
         <div>
+            <Pagination gamesPerPage={gamesPerPage} totalGames={games.length} paginate={paginate}/>
             <div>
                 <select onChange={(event) => handlerFilterByGenre(event)}>
                     <option value={'All'}>All</option>
@@ -68,7 +79,7 @@ export default function Games() {
                 </select>
             </div>
             <div>
-                {games.length ? games.map(game => <Game key={game.id} name={game.name} image={game.image} genres={game.genres.join(', ')} id={game.id} />) : <h2>Loading</h2>}
+                {currentGames.length ? currentGames.map(game => <Game key={game.id} name={game.name} image={game.image} genres={game.genres.join(', ')} id={game.id} />) : <h2>Loading</h2>}
             </div>
         </div>
     )
