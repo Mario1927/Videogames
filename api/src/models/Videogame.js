@@ -18,10 +18,6 @@ module.exports = (sequelize) => {
     rating: {
       type: DataTypes.DECIMAL
     },
-    platforms: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,

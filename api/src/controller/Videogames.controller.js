@@ -3,6 +3,7 @@ const {API_KEY} = process.env;
 const axios = require('axios');
 const { Op } = require('sequelize');
 const { Videogame, Genre } = require('../db.js');
+const Platforms = require('../models/Platforms.js');
 
 const getAllGames = async (req, res, next) => {
     if(req.query.name){
@@ -175,13 +176,17 @@ const createGame = async (req, res, next) => {
         image,
         released,
         rating,
-        platforms,
         created: true
     });
 
     genres.split(', ').map(async genre => {
         const genreBD = await Genre.findOne({where: {name: genre}});
         await createdGame.addGenre(genreBD);
+    });
+
+    platforms.split(', ').map(async platform => {
+        const platformBD = await Platforms.findOne({where: {name: platform}});
+        await createdGame.addPlatform(platformBD);
     });
 
     return res.sendStatus(200);
