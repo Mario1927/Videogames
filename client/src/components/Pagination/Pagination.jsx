@@ -11,9 +11,7 @@ export default function Pagination({ gamesPerPage, totalGames, paginate }) {
     return (
         <div>
             {pageNumbers.map(number => (
-                <li key={number}>
-                    <button onClick={() => paginate(number)}>{number}</button>
-                </li>
+                <button key={number} onClick={() => paginate(number)}>{number}</button>
             )
             )}
         </div>
