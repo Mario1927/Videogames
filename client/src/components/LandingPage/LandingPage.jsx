@@ -1,7 +1,7 @@
 import React, {useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { getGames, getGenres } from '../../actions/index'; 
+import { getGames, getGenres, getPlatforms } from '../../actions/index'; 
 
 
 export default function LandingPage() {
@@ -11,6 +11,7 @@ export default function LandingPage() {
     useEffect(() => {
         dispatch(getGenres())
         dispatch(getGames())
+        dispatch(getPlatforms())
     }, [dispatch]);
 
     return (

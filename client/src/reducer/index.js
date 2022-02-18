@@ -1,4 +1,4 @@
-import { GET_ALL_GAMES, GET_GAMES_BY_NAME, GET_GAME_BY_ID, GET_ALL_GENRES, FILTER_BY_GENRE, FILTER_BY_CREATOR, ORDER_BY_NAME, ORDER_BY_RATING } from '../types/types.js';
+import { GET_ALL_GAMES, GET_GAMES_BY_NAME, GET_GAME_BY_ID, GET_ALL_GENRES, FILTER_BY_GENRE, FILTER_BY_CREATOR, ORDER_BY_NAME, ORDER_BY_RATING, GET_ALL_PLATFORMS } from '../types/types.js';
 
 const initialState = {
     games: [],
@@ -6,6 +6,7 @@ const initialState = {
     gamesByName: [],
     allGames: [],
     genres: [],
+    platforms: [],
     filters: {filteredByCreator: 'All', filteredByGenre: 'All'},
     filteredByCreator: [],
     filteredByGenre: []
@@ -30,6 +31,10 @@ function rootReducer(state = initialState, action) {
         case GET_ALL_GENRES:
             return {
                 ...state, genres: action.payload
+            }
+        case GET_ALL_PLATFORMS:
+            return {
+                ...state, platforms: action.payload
             }
         case ORDER_BY_NAME:
             var sortByName = []
