@@ -2,7 +2,7 @@ require('dotenv').config();
 const {API_KEY} = process.env;
 const axios = require('axios');
 const { Op } = require('sequelize');
-const { Videogame, Genre } = require('../db.js');
+const { Videogame, Genre, Platform } = require('../db.js');
 const Platforms = require('../models/Platforms.js');
 
 const getAllGames = async (req, res, next) => {
@@ -168,7 +168,10 @@ const getGameDetail = async (req, res, next) => {
 };
 
 const createGame = async (req, res, next) => {
-    const {name, description, image, released, rating, genres, platforms} = req.query;
+
+    console.log(req.body)
+
+    const {name, description, image, released, rating, genres, platforms} = req.body;
     
     const createdGame = await Videogame.create({
         name, 
@@ -179,17 +182,17 @@ const createGame = async (req, res, next) => {
         created: true
     });
 
-    genres.split(', ').map(async genre => {
+    genres.map(async genre => {
         const genreBD = await Genre.findOne({where: {name: genre}});
         await createdGame.addGenre(genreBD);
     });
 
-    platforms.split(', ').map(async platform => {
-        const platformBD = await Platforms.findOne({where: {name: platform}});
+    platforms.map(async platform => {
+        const platformBD = await Platform.findOne({where: {name: platform}});
         await createdGame.addPlatform(platformBD);
     });
 
-    return res.sendStatus(200);
+    return res.status(200).send('Game created succesfully');
 };
 
 module.exports = {
