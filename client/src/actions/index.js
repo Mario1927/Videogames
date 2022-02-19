@@ -37,33 +37,25 @@ export function getGenres() {
 }
 
 export function filterGamesByGenre(payload) {
-    return function(dispatch) {
-        return dispatch({
-            type: FILTER_BY_GENRE, payload
-        })
+    return {
+        type: FILTER_BY_GENRE, payload
     }
 }
 
 export function filterGamesByCreator(payload) {
-    return function(dispatch) {
-        return dispatch({
-            type: FILTER_BY_CREATOR, payload
-        })
+    return {
+        type: FILTER_BY_CREATOR, payload
     }
 }
 
 export function sortGamesByName(payload) {
-    return function(dispatch) {
-        return dispatch({
-            type: ORDER_BY_NAME, payload
-        })
+    return {
+        type: ORDER_BY_NAME, payload
     }
 }
 
 export function sortGamesByRating(payload) {
-    return function(dispatch) {
-        return dispatch({
-            type: ORDER_BY_RATING, payload
-        })
+    return {
+        type: ORDER_BY_RATING, payload
     }
 }
