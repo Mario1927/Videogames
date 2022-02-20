@@ -1,4 +1,5 @@
 import React from "react";
+import { PaginationButton, PaginationWrapper } from "../Styled/Pagination";
 
 export default function Pagination({ gamesPerPage, totalGames, paginate }) {
 
@@ -9,11 +10,10 @@ export default function Pagination({ gamesPerPage, totalGames, paginate }) {
     }
 
     return (
-        <div>
+        <PaginationWrapper>
             {pageNumbers.map(number => (
-                <button key={number} onClick={() => paginate(number)}>{number}</button>
-            )
-            )}
-        </div>
+                <PaginationButton key={number} onClick={() => paginate(number)}>{number}</PaginationButton>
+            ))}
+        </PaginationWrapper>
     )
 }

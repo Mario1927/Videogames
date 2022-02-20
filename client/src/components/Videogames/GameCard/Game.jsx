@@ -1,22 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { GameCardName, GameCardWrapper, GameCardImg, GameCardGenres, GameCardLink } from '../../Styled/Game';
 
 export default function Game({name, image, genres, id}) {
 
     return (
-        <div>
-            <div>
-                <h2>{name}</h2>
-            </div>
-            <Link to={`/games/${id}`}>
-                <div>
-                    <img src={image} alt='Game'/>
-                </div>
-            </Link>
-            
-            <div>
-                <p>{genres}</p>
-            </div>
-        </div>
+        <GameCardWrapper>
+            <GameCardName>
+                {name}
+            </GameCardName>
+            <GameCardLink to={`/games/${id}`}>
+                <GameCardImg src={image} alt='Game'/>
+            </GameCardLink>
+            <GameCardGenres>
+                {genres}
+            </GameCardGenres>
+        </GameCardWrapper>
     )
 }

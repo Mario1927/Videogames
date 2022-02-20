@@ -3,6 +3,7 @@ import Game from "../GameCard/Game";
 import { useSelector, useDispatch } from "react-redux";
 import { filterGamesByCreator, filterGamesByGenre, getGames, getGenres, sortGamesByName, sortGamesByRating } from '../../../actions/index';
 import Pagination from "../../Pagination/Pagination";
+import { GamesCard, GamesFiltersWrapper, GamesSelects, GamesWrapper } from "../../Styled/Games";
 
 export default function Games() {
     const dispatch = useDispatch();
@@ -38,49 +39,46 @@ export default function Games() {
         dispatch(filterGamesByGenre(event.target.value))
         document.querySelector('.SortByName').selectedIndex = '0';
         document.querySelector('.SortByRating').selectedIndex = '0';
+        setCurrentPage(1);
     }
 
     function handlerFilterByCreated(event) {
         dispatch(filterGamesByCreator(event.target.value))
         document.querySelector('.SortByName').selectedIndex = '0';
         document.querySelector('.SortByRating').selectedIndex = '0';
+        setCurrentPage(1);
     }
 
     return (
-        <div>
+        <GamesWrapper>
             <Pagination gamesPerPage={gamesPerPage} totalGames={games.length} paginate={paginate}/>
-            <div>
-                <select onChange={(event) => handlerFilterByGenre(event)}>
+            <GamesFiltersWrapper>
+                <label>Filter By Genre: </label>
+                <GamesSelects onChange={(event) => handlerFilterByGenre(event)}>
                     <option value={'All'}>All</option>
                     {genres.map(genre => {
                         return <option key={genre.id} value={genre.name}>{genre.name}</option>
                     })}
-                </select>
-            </div>
-            <div>
-                <select onChange={(event) => handlerFilterByCreated(event)}>
+                </GamesSelects>
+                <GamesSelects onChange={(event) => handlerFilterByCreated(event)}>
                     <option value='All'>All</option>
                     <option value={true}>Created</option>
                     <option value={false}>Existing</option>
-                </select>
-            </div>
-            <div>
-                <select className="SortByName" onChange={(event) => handlerSortByName(event)}>
+                </GamesSelects>
+                <GamesSelects className="SortByName" onChange={(event) => handlerSortByName(event)}>
                     <option value='None'>None</option>
                     <option value='ASC'>Ascendent</option>
                     <option value='DESC'>Descendent</option>
-                </select>
-            </div>
-            <div>
-                <select className="SortByRating" onChange={(event) => handlerSortByRating(event)}>
+                </GamesSelects>
+                <GamesSelects className="SortByRating" onChange={(event) => handlerSortByRating(event)}>
                     <option value='None'>None</option>
                     <option value='ASC'>Ascendent</option>
                     <option value='DESC'>Descendent</option>
-                </select>
-            </div>
-            <div>
+                </GamesSelects>
+            </GamesFiltersWrapper>
+            <GamesCard>
                 {currentGames.length ? currentGames.map(game => <Game key={game.id} name={game.name} image={game.image} genres={game.genres.join(', ')} id={game.id} />) : <h2>Loading</h2>}
-            </div>
-        </div>
+            </GamesCard>
+        </GamesWrapper>
     )
 };

@@ -15,6 +15,7 @@ function App() {
           <Route path='/games/:idCiudad' element={<GameDetail/>}/>
           <Route path='/search/:name' element={<GamesByName/>}/>
         </Route>
+        <Route path='/navbar' element={<NavBar/>}/>
         <Route path='/create' element={<CreateGame/>}/>
         <Route index element={<LandingPage/>}/>
       </Routes>

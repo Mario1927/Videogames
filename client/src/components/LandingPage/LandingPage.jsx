@@ -1,7 +1,7 @@
 import React, {useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { getGames, getGenres, getPlatforms } from '../../actions/index'; 
+import { getGames, getGenres, getPlatforms } from '../../actions/index';
+import { LandingTitle, LandingWrapper, LandingButton, LandingLink } from "../Styled/LandingPage";
 
 
 export default function LandingPage() {
@@ -15,11 +15,13 @@ export default function LandingPage() {
     }, [dispatch]);
 
     return (
-        <div>
-            <h2>Welcome to Videogames App</h2>
-            <Link to='/games'>
-                <button type="submit">Enter</button>
-            </Link>
-        </div>
+        <LandingWrapper>
+            <LandingTitle>
+                WELCOME TO VIDEOGAME'S APP
+            </LandingTitle>
+            <LandingLink to={'/games'}>
+                <LandingButton type="submit">ENTER</LandingButton>
+            </LandingLink>
+        </LandingWrapper>
     )
 };

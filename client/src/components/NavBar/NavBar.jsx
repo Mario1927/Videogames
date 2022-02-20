@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
-
-
+import { Outlet } from "react-router-dom";
+import { NavButton, NavForm, NavInput, NavLink, NavWrapper } from "../Styled/NavBar";
 
 export default function NavBar() {
 
@@ -13,23 +12,30 @@ export default function NavBar() {
     };
 
     return (
-        <div>
-            <h4>Videogames App</h4>
-            <Link to={'/games'}>
-                <span>Home</span>
-            </Link>
-            <form>
-                <input 
-                    value={name}
-                    onChange={(event) => setName(event.target.value)}
-                    placeholder='Search games by name...'
-                    type='text'
-                />
-                <Link to={`/search/${name}`}>
-                    <button type="submit" onSubmit={(event) => submitHandler(event)}>Search</button>
-                </Link>
-            </form>
-            <Outlet />
-        </div>
+        <React.Fragment>
+            <NavWrapper>
+                <NavLink to={'/games'}>
+                    <NavButton>Home</NavButton>
+                </NavLink>
+                <NavLink to={'/create'}>
+                    <NavButton>Create Game</NavButton>
+                </NavLink>
+                <NavLink to={'/about'}>
+                    <NavButton>About</NavButton>
+                </NavLink>
+                <NavForm>
+                    <NavInput 
+                        value={name}
+                        onChange={(event) => setName(event.target.value)}
+                        placeholder='Search games by name...'
+                        type='text'
+                    />
+                    <NavLink to={`/search/${name}`}>
+                        <NavButton type="submit" onSubmit={(event) => submitHandler(event)}>Search</NavButton>
+                    </NavLink>
+                </NavForm>
+            </NavWrapper>
+            <Outlet/>
+        </React.Fragment>
     )
 }
