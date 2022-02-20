@@ -3,6 +3,7 @@ import Game from "../GameCard/Game";
 import { useSelector, useDispatch } from "react-redux";
 import { searchGamesByName } from '../../../actions/index'; 
 import { useParams } from "react-router-dom";
+import { GamesByNameWrapper } from "../../Styled/GamesByName";
 
 export default function GamesByName() {
     const dispatch = useDispatch();
@@ -14,8 +15,8 @@ export default function GamesByName() {
     }, [dispatch, name]);
 
     return (
-        <div>
+        <GamesByNameWrapper>
             {state.length ? state.map(game => <Game key={game.id} name={game.name} image={game.image} genres={game.genres.join(', ')} id={game.id} />) : <h2>Loading</h2>}
-        </div>
+        </GamesByNameWrapper>
     )
 };

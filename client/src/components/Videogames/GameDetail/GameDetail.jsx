@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { searchGameById } from '../../../actions/index.js';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { GameDetailWrapper, GameDetailImg, GameDetailDescription, GameDetailTitle, GameDetailWrapperOthers, GameDetailOthers, GameDetailLabel } from '../../Styled/GameDetail.js';
 
 export default function GameDetail() {
     const dispatch = useDispatch();
@@ -13,28 +14,32 @@ export default function GameDetail() {
     }, [dispatch, idCiudad]);
 
     return (
-        <div>
-            <div>
-                <h2>{state.name}</h2>
-            </div>
-            <div>
-                <img src={state.image} alt='Game'/>
-            </div>
-            <div>
-                <p>{state.genres}</p>
-            </div>
-            <div>
-                <p>{state.description}</p>
-            </div>
-            <div>
-                <p>{state.releaseDate}</p>
-            </div>
-            <div>
-                <p>{state.rating}</p>
-            </div>
-            <div>
-                <p>{state.platforms}</p>
-            </div>
-        </div>
+        <GameDetailWrapper>
+            <GameDetailTitle>
+                {state.name}
+            </GameDetailTitle>
+            <GameDetailImg src={state.image} alt='Game'/>
+            <GameDetailWrapperOthers>
+                <GameDetailOthers>
+                    Genres:
+                    {state.genres}
+                </GameDetailOthers>
+                <GameDetailOthers>
+                    Release date:
+                    {state.releaseDate ? state.releaseDate : 'N/A'}
+                </GameDetailOthers>
+                <GameDetailOthers>
+                    Rating:
+                    {state.rating ? state.rating : 'N/A'}
+                </GameDetailOthers>
+            </GameDetailWrapperOthers>
+            <GameDetailDescription>
+                {state.description}
+            </GameDetailDescription>
+            <GameDetailOthers>
+                Platforms:
+                {state.platforms ? state.platforms : 'N/A'}
+            </GameDetailOthers>
+        </GameDetailWrapper>
     )
 }
