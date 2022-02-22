@@ -6,6 +6,7 @@ export const GameCardWrapper = styled.div`
     flex-direction: column;
     width: 33vw;
     margin-left: 1vw;
+    color: white;
 `
 
 export const GameCardName = styled.h2`
@@ -16,6 +17,13 @@ export const GameCardName = styled.h2`
 export const GameCardImg = styled.img`
     width: 30vw;
     height: 35vh;
+    border: 1px solid white;
+    border-radius: 5px;
+
+    &:hover {
+        border-color: blueviolet;
+        opacity: 0.9;
+    }
 `
 
 export const GameCardGenres = styled.p`

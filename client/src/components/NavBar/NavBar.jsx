@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { NavButton, NavForm, NavInput, NavLink, NavWrapper } from "../Styled/NavBar";
+import { NavButton, NavForm, NavInput, NavLink, NavWrapper, NavInputButton } from "../Styled/NavBar";
 
 export default function NavBar() {
 
@@ -14,6 +14,7 @@ export default function NavBar() {
     return (
         <React.Fragment>
             <NavWrapper>
+                <div></div>
                 <NavLink to={'/games'}>
                     <NavButton>Home</NavButton>
                 </NavLink>
@@ -31,7 +32,7 @@ export default function NavBar() {
                         type='text'
                     />
                     <NavLink to={`/search/${name}`}>
-                        <NavButton type="submit" onSubmit={(event) => submitHandler(event)}>Search</NavButton>
+                        <NavInputButton type="submit" onSubmit={(event) => submitHandler(event)}>Search</NavInputButton>
                     </NavLink>
                 </NavForm>
             </NavWrapper>

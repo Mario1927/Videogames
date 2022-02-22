@@ -1,12 +1,15 @@
 import styled from "styled-components";
+import GamesBackground from '../images/Dark-Background.jpg'
 
 export const GamesWrapper = styled.div`
+    /* background-image: url(${GamesBackground}); */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100vw;
     max-width: 100vw;
+    padding-left: 10px;
 `
 
 export const GamesFiltersWrapper = styled.div`

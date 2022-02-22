@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { getGames, getGenres, getPlatforms } from '../../actions/index';
 import { LandingTitle, LandingWrapper, LandingButton, LandingLink } from "../Styled/LandingPage";
 
-
 export default function LandingPage() {
 
     const dispatch = useDispatch();

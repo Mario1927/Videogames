@@ -46,14 +46,6 @@ export default function CreateGame() {
         } catch (error) {
             console.log(error)
         }
-        //  axios.post('http://localhost:3001/create', input)
-        // fetch("http://localhost:3001/videogame", {
-        //     method: "POST",
-        //     headers: {
-        //     "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify(input),
-        // })
     }
 
     useEffect(() => {

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { searchGameById } from '../../../actions/index.js';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { GameDetailWrapper, GameDetailImg, GameDetailDescription, GameDetailTitle, GameDetailWrapperOthers, GameDetailOthers, GameDetailLabel } from '../../Styled/GameDetail.js';
+import { GameDetailWrapper, GameDetailImg, GameDetailDescription, GameDetailTitle, GameDetailWrapperOthers, GameDetailOthers } from '../../Styled/GameDetail.js';
 
 export default function GameDetail() {
     const dispatch = useDispatch();

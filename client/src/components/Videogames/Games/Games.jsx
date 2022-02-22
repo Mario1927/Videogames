@@ -53,7 +53,6 @@ export default function Games() {
         <GamesWrapper>
             <Pagination gamesPerPage={gamesPerPage} totalGames={games.length} paginate={paginate}/>
             <GamesFiltersWrapper>
-                <label>Filter By Genre: </label>
                 <GamesSelects onChange={(event) => handlerFilterByGenre(event)}>
                     <option value={'All'}>All</option>
                     {genres.map(genre => {

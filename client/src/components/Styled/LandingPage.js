@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import LangingImg from '../images/Backgroud_Commodore.jpg'
 
 export const LandingWrapper = styled.div`
-    background-image: url('https://wallpaper.dog/large/20525140.jpg');
+    background-image: url(${LangingImg});
     background-size: cover;
     width: 100vw;
     height: 100vh;
