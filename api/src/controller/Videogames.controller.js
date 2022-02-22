@@ -3,7 +3,6 @@ const {API_KEY} = process.env;
 const axios = require('axios');
 const { Op } = require('sequelize');
 const { Videogame, Genre, Platform } = require('../db.js');
-const Platforms = require('../models/Platforms.js');
 
 const getAllGames = async (req, res, next) => {
     if(req.query.name){
@@ -168,8 +167,6 @@ const getGameDetail = async (req, res, next) => {
 };
 
 const createGame = async (req, res, next) => {
-
-    console.log(req.body)
 
     const {name, description, image, released, rating, genres, platforms} = req.body;
     
