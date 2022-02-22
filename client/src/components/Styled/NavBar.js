@@ -11,6 +11,12 @@ export const NavWrapper = styled.div`
     top: 0;
     width: 100%; */
 `
+
+export const NavLogo = styled.img`
+    height: 5vh;
+`
+
+
 export const NavButton = styled.button`
     color: whitesmoke;
     background: none;

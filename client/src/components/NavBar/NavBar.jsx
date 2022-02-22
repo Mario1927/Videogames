@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { NavButton, NavForm, NavInput, NavLink, NavWrapper, NavInputButton } from "../Styled/NavBar";
+import { NavButton, NavForm, NavInput, NavLink, NavWrapper, NavInputButton, NavLogo } from "../Styled/NavBar";
+import LogoMario from "../images/Gamepedia.png"
 
 export default function NavBar() {
 
     const [name, setName] = useState('');
+
+    const Logo = LogoMario;
 
     function submitHandler(event) {
         event.preventDefault();
@@ -14,7 +17,9 @@ export default function NavBar() {
     return (
         <React.Fragment>
             <NavWrapper>
-                <div></div>
+                <NavLink to={'/games'}>
+                    <NavLogo src={Logo} alt='Logo'/>
+                </NavLink>
                 <NavLink to={'/games'}>
                     <NavButton>Home</NavButton>
                 </NavLink>
