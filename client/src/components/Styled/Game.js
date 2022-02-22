@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 export const GameCardWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    width: 33vw;
-    margin-left: 1vw;
+    width: 33.33vw;
     color: white;
+    align-items: center;
 `
 
 export const GameCardName = styled.h2`
@@ -16,7 +16,7 @@ export const GameCardName = styled.h2`
 
 export const GameCardImg = styled.img`
     width: 30vw;
-    height: 35vh;
+    height: 40vh;
     border: 1px solid white;
     border-radius: 5px;
 

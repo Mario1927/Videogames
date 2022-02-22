@@ -9,7 +9,6 @@ export const GamesWrapper = styled.div`
     align-items: center;
     width: 100vw;
     max-width: 100vw;
-    padding-left: 10px;
 `
 
 export const GamesFiltersWrapper = styled.div`
@@ -26,11 +25,12 @@ export const GamesSelects = styled.select`
 
 export const GamesCard = styled.div`
     display: grid;
-    grid-auto-columns: 33.33%;
+    grid-auto-columns: auto;
     grid-template-rows: 1fr;
     grid-auto-rows: 1fr;
     gap: 0px 0px;
     grid-auto-flow: row;
+    align-items: center;
     grid-template-areas:
         ". . .";
 `
