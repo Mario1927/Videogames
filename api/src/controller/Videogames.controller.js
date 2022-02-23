@@ -21,7 +21,7 @@ const getAllGames = async (req, res, next) => {
                         name: game.name,
                         image: game.background_image,
                         id: game.id,
-                        genres: game.genres.map(genre => genre.name),
+                        genres: game.genres?.map(genre => genre.name),
                         rating: game.rating,
                         created: false
                     }
@@ -30,13 +30,10 @@ const getAllGames = async (req, res, next) => {
                 const responseBD = requestBD?.map(game => {
                     return {
                         name: game.name,
-                        description: game.description,
-                        releasedDate: game.releaseDate,
                         rating: game.rating,
-                        platforms: game.platforms,
                         created: game.created,
-                        genres: game.genres.map(genre => genre.name),
-                        image: '',
+                        genres: game.genres?.map(genre => genre.name),
+                        image: game.image,
                         id: game.id
                     }
                 });
@@ -80,13 +77,10 @@ const getAllGames = async (req, res, next) => {
                     
                     return {
                         name: game.name,
-                        description: game.description,
-                        releasedDate: game.releaseDate,
                         rating: game.rating,
-                        platforms: game.platforms,
                         created: game.created,
                         genres: game.genres?.map(genre => genre.name),
-                        image: '',
+                        image: game.image,
                         id: game.id
                     }
                 })
@@ -114,22 +108,23 @@ const getGameDetail = async (req, res, next) => {
                 where: {
                     id: id
                 },
-                include: Genre
+                include: [Platform, Genre]
             });
 
             var responseBD = []; responseBD.push(requestBD)
             
             if(requestBD) {
                 responseBD = responseBD.map(game => {
+                    console.log(game);
                     return {
                         name: game.name,
                         description: game.description,
-                        releasedDate: game.releaseDate,
+                        releaseDate: game.releaseDate,
                         rating: game.rating,
-                        platforms: game.platforms,
+                        platforms: game.platforms?.map(platform => platform.name).join(', '),
                         created: game.created,
-                        genres: game.genres.map(genre => genre.name).join(', '),
-                        image: '',
+                        genres: game.genres?.map(genre => genre.name).join(', '),
+                        image: game.image,
                         id: game.id
                     }
                 })
@@ -151,8 +146,8 @@ const getGameDetail = async (req, res, next) => {
                     image: background_image,
                     releaseDate: released,
                     rating,
-                    genres: genres.map(genre => genre.name).join(', '),
-                    platforms: platforms.map(p => p.platform.name).join(', '),
+                    genres: genres?.map(genre => genre.name).join(', '),
+                    platforms: platforms?.map(p => p.platform.name).join(', '),
                     id,
                     created: false
                 };
@@ -168,13 +163,13 @@ const getGameDetail = async (req, res, next) => {
 
 const createGame = async (req, res, next) => {
 
-    const {name, description, image, released, rating, genres, platforms} = req.body;
+    const {name, description, image, releaseDate, rating, genres, platforms} = req.body;
     
     const createdGame = await Videogame.create({
         name, 
         description,
         image,
-        released,
+        releaseDate,
         rating,
         created: true
     });

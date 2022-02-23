@@ -15,8 +15,11 @@ module.exports = (sequelize) => {
     releaseDate: {
       type: DataTypes.STRING
     },
+    image: {
+      type: DataTypes.STRING
+    },
     rating: {
-      type: DataTypes.DECIMAL
+      type: DataTypes.STRING
     },
     id: {
       type: DataTypes.UUID,
