@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getGenres, getPlatforms } from "../../actions";
+import { CreateGamesForm, CreateGamesWrapper, CreateGamesInput, CreateGamesFormWrapper, CreateGamesCheckboxWrapper, CreateGamesItemsWrapper, CreateGamesPairItemsWrapper } from "../Styled/CreateGames";
 
 export default function CreateGame() {
 
@@ -14,16 +15,29 @@ export default function CreateGame() {
         name: '',
         description: '',
         image: '',
-        date: '',
+        releaseDate: '',
+        rating: '',
         platforms: [],
         genres: []
+    })
+
+    const [error, setError] = useState({
+        name: '',
+        description: '',
+        image: '',
+        releaseDate: '',
+        rating: '',
+        platforms: '',
+        genres: ''
     })
 
     function onChange(event) {
         setInput({
             ...input,
             [event.target.name]: event.target.value
-        })
+        });
+
+        validate(event.target.name, event.target.value);
     }
 
     function onSelect(event) {
@@ -38,13 +52,71 @@ export default function CreateGame() {
         
     }
 
+    function validate(input, value) {
+        
+        switch (input) {
+            case 'name':
+                if(/[^a-zA-Z0-9]/.test(value)){
+                    return setError({...error, name: 'Not special characters'})
+                } else {
+                    return setError({...error, name: ''})
+                };
+            case 'description':
+                if(value.length < 10) {
+                    return setError({...error, description: 'At least ten characters required'})
+                }
+                else {
+                    return setError({...error, description: ''})
+                }
+            case 'rating':
+                if(!/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/.test(value)){
+                    return setError({...error, rating: 'Should only be numeric characters'})
+                }else if(parseFloat(value) < 1 || parseFloat(value) > 5){
+                    return setError({...error, rating: 'Should be between 1-5'})
+                }
+                else {
+                    return setError({...error, rating: ''})
+                }
+            default :
+                return error;
+        }
+    }
+
+    function validateSubmit(){
+
+        var asignErrors = {};
+
+        if(!input.platforms.length){
+            asignErrors = {...asignErrors,  platforms: 'Must select at least one platform'}
+        }
+        if(!input.genres.length){
+            asignErrors = {...asignErrors, genres: 'Must select at least one genre'}
+        }
+        if(!input.name){
+           asignErrors = {...asignErrors, name: 'Must add a name'}
+        }
+        if(!input.description){
+           asignErrors = {...asignErrors, description: 'Must add a description'}
+        }
+
+        setError({...error, ...asignErrors});
+
+        return Object.values(asignErrors).filter(value => value !== '');
+    }
+
     async function onSubmit(event) {
         event.preventDefault();
-        try {
-            await axios.post('http://localhost:3001/videogames/create', input)
+        const flag = validateSubmit();
 
-        } catch (error) {
-            console.log(error)
+        if(!flag.length){
+            try {
+                await axios.post('http://localhost:3001/videogames/create', input)
+
+            } catch (error) {
+                console.log(error)
+            } 
+        }else {
+            alert('Missing values')
         }
     }
 
@@ -54,40 +126,72 @@ export default function CreateGame() {
     }, [dispatch])
 
     return (
-        <form onSubmit={onSubmit}>
-            <label>Name: </label>
-            <input type={'text'} onChange={onChange} name={'name'} value={input.name}/>
+        <CreateGamesWrapper>
+            <CreateGamesFormWrapper>
+                <CreateGamesForm onSubmit={onSubmit}>
+                    <CreateGamesItemsWrapper>
+                        <label>Name: </label>
+                        <CreateGamesInput type={'text'} onChange={onChange} name={'name'} value={input.name}/>
+                        <span>{error.name}</span>
+                    </CreateGamesItemsWrapper>
 
-            <label>Description: </label>
-            <input type={'text'} onChange={onChange} name={'description'} value={input.description}/>
+                    <CreateGamesItemsWrapper>
+                        <label>Description: </label>
+                        <CreateGamesInput type={'text'} onChange={onChange} name={'description'} value={input.description}/>
+                        <span>{error.description}</span>
+                    </CreateGamesItemsWrapper>
 
-            <label>Platforms: </label>
-            {platforms.map(platform => {
-                return (
-                    <React.Fragment key={platform.name}>
-                        <label key={platform.name}> {platform.name}</label>
-                        <input type={'checkbox'} onChange={onSelect} name={'platforms'} key={platform.id} value={platform.name}></input>
-                    </React.Fragment>
-                )
-            })}
+                    <CreateGamesItemsWrapper>
+                        <label>Image: </label>
+                        <CreateGamesInput type="text" onChange={onChange} name="image" value={input.image}/>
+                    </CreateGamesItemsWrapper>
+                    
+                    <CreateGamesPairItemsWrapper>
+                        <CreateGamesItemsWrapper>
+                            <label>Released: </label>
+                            <input type={'date'} onChange={onChange} name={'releaseDate'} value={input.releaseDate}/>
+                        </CreateGamesItemsWrapper>
 
-            <label>Genres: </label>
-            {genres.map(genre => {
-                return (
-                    <React.Fragment key={genre.name}>
-                        <label key={genre.name}> {genre.name}</label>
-                        <input type={'checkbox'} onChange={onSelect} name={'genres'} key={genre.id} value={genre.name}></input>
-                    </React.Fragment>
-                )
-            })}
-            
-            <label>Image: </label>
-            <input type="text" onChange={onChange} name="image" value={input.image}/>
+                        <CreateGamesItemsWrapper>
+                            <label>Rating: </label>
+                            <input type="text" onChange={onChange} name="rating" value={input.rating}/>
+                            <span>{error.rating}</span>
+                        </CreateGamesItemsWrapper>
+                    </CreateGamesPairItemsWrapper>
 
-            <label>Released: </label>
-            <input type={'date'} onChange={onChange} name={'releasedDate'} value={input.releasedDate}/>
+                    <CreateGamesItemsWrapper>
+                        <label>Platforms: </label>
+                        <CreateGamesCheckboxWrapper>
+                            {platforms.map(platform => {
+                                return (
+                                    <React.Fragment key={platform.name}>
+                                        <label key={platform.name}> {platform.name}</label>
+                                        <input type={'checkbox'} onChange={onSelect} name={'platforms'} key={platform.id} value={platform.name}></input>
+                                    </React.Fragment>
+                                )
+                            })}
+                        </CreateGamesCheckboxWrapper>
+                        <span>{error.platforms}</span>
+                    </CreateGamesItemsWrapper>
 
-            <button type="submit">Submit</button>
-        </form>
+                    <CreateGamesItemsWrapper>
+                        <label>Genres: </label>
+                        <CreateGamesCheckboxWrapper>
+                            {genres.map(genre => {
+                                return (
+                                    <React.Fragment key={genre.name}>
+                                        <label key={genre.name}> {genre.name}</label>
+                                        <input type={'checkbox'} onChange={onSelect} name={'genres'} key={genre.id} value={genre.name}></input>
+                                    </React.Fragment>
+                                )
+                            })}
+                        </CreateGamesCheckboxWrapper>
+                        <span>{error.genres}</span>
+                    </CreateGamesItemsWrapper>
+
+                    <button type="submit">Submit</button>
+                </CreateGamesForm>
+            </CreateGamesFormWrapper>
+        </CreateGamesWrapper>
     )
 }
