@@ -21,6 +21,9 @@ export const GamesSelects = styled.select`
     margin-right: 2.5px;
     font-family: "Cascadia Code",Consolas,Monaco,"Andale Mono","Ubuntu Mono",monospace;
     font-size: 15px;
+    background-color: rgba(0, 0, 0, 0.85);
+    color: white;
+    border-color: #00D1FF;
 `
 
 export const GamesCard = styled.div`

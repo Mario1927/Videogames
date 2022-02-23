@@ -51,7 +51,6 @@ export default function Games() {
 
     return (
         <GamesWrapper>
-            <Pagination gamesPerPage={gamesPerPage} totalGames={games.length} paginate={paginate}/>
             <GamesFiltersWrapper>
                 <GamesSelects onChange={(event) => handlerFilterByGenre(event)}>
                     <option value={'All'}>All</option>
@@ -78,6 +77,7 @@ export default function Games() {
             <GamesCard>
                 {currentGames.length ? currentGames.map(game => <Game key={game.id} name={game.name} image={game.image} genres={game.genres.join(', ')} id={game.id} />) : <h2>Loading</h2>}
             </GamesCard>
+            <Pagination gamesPerPage={gamesPerPage} totalGames={games.length} paginate={paginate}/>
         </GamesWrapper>
     )
 };
