@@ -3,6 +3,8 @@ import Game from "../GameCard/Game";
 import { useSelector, useDispatch } from "react-redux";
 import { filterGamesByCreator, filterGamesByGenre, getGames, getGenres, sortGamesByName, sortGamesByRating } from '../../../actions/index';
 import Pagination from "../../Pagination/Pagination";
+import Loanding from "../../Loading/Loading";
+import NotFound from "../../NotFound/NotFound";
 import { GamesCard, GamesFiltersWrapper, GamesSelects, GamesWrapper } from "../../Styled/Games";
 
 export default function Games() {
@@ -11,10 +13,11 @@ export default function Games() {
     const genres = useSelector(state => state.genres)
     const [currentPage, setCurrentPage] = useState(1);
     const [gamesPerPage] = useState(15);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         dispatch(getGenres())
-        dispatch(getGames())
+        dispatch(getGames()).then(() => setLoading(false))
     }, [dispatch]);
 
     
@@ -75,7 +78,7 @@ export default function Games() {
                 </GamesSelects>
             </GamesFiltersWrapper>
             <GamesCard>
-                {currentGames.length ? currentGames.map(game => <Game key={game.id} name={game.name} image={game.image} genres={game.genres.join(', ')} id={game.id} />) : <h2>Loading</h2>}
+                {loading ? <Loanding/> : currentGames.length ? currentGames.map(game => <Game key={game.id} name={game.name} image={game.image} genres={game.genres.join(', ')} id={game.id} />) : <NotFound/>}
             </GamesCard>
             <Pagination gamesPerPage={gamesPerPage} totalGames={games.length} paginate={paginate}/>
         </GamesWrapper>

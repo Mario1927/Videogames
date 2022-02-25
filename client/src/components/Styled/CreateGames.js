@@ -67,3 +67,7 @@ export const CreateGamesPairItemsWrapper = styled.div`
     grid-template-columns: 1fr 1fr;
     justify-items: center;
 `
+
+export const CreateGamesFormErrors = styled.span`
+    color: #00D1FF;
+`

@@ -1,9 +1,9 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getGenres, getPlatforms } from "../../actions";
-import { CreateGamesForm, CreateGamesWrapper, CreateGamesInput, CreateGamesFormWrapper, CreateGamesCheckboxWrapper, CreateGamesItemsWrapper, CreateGamesPairItemsWrapper } from "../Styled/CreateGames";
+import { CreateGamesForm, CreateGamesWrapper, CreateGamesInput, CreateGamesFormWrapper, CreateGamesCheckboxWrapper, CreateGamesItemsWrapper, CreateGamesPairItemsWrapper, CreateGamesFormErrors } from "../Styled/CreateGames";
 
 export default function CreateGame() {
 
@@ -56,8 +56,8 @@ export default function CreateGame() {
         
         switch (input) {
             case 'name':
-                if(/[^a-zA-Z0-9]/.test(value)){
-                    return setError({...error, name: 'Not special characters'})
+                if(!/.*\S.*/.test(value)){
+                    return setError({...error, name: 'Not special characters or leading spaces'})
                 } else {
                     return setError({...error, name: ''})
                 };
@@ -101,8 +101,9 @@ export default function CreateGame() {
 
         setError({...error, ...asignErrors});
 
-        return Object.values(asignErrors).filter(value => value !== '');
+        return Object.values({...error, ...asignErrors}).filter(value => value !== '');
     }
+    const refForm = useRef(null);
 
     async function onSubmit(event) {
         event.preventDefault();
@@ -111,12 +112,13 @@ export default function CreateGame() {
         if(!flag.length){
             try {
                 await axios.post('http://localhost:3001/videogames/create', input)
-
+                alert('Game created sucesfully')
+                refForm.current.reset()
             } catch (error) {
                 console.log(error)
             } 
         }else {
-            alert('Missing values')
+            alert('Missing or invalid values')
         }
     }
 
@@ -128,17 +130,17 @@ export default function CreateGame() {
     return (
         <CreateGamesWrapper>
             <CreateGamesFormWrapper>
-                <CreateGamesForm onSubmit={onSubmit}>
+                <CreateGamesForm ref={refForm} onSubmit={onSubmit}>
                     <CreateGamesItemsWrapper>
                         <label>Name: </label>
                         <CreateGamesInput type={'text'} onChange={onChange} name={'name'} value={input.name}/>
-                        <span>{error.name}</span>
+                        <CreateGamesFormErrors>{error.name}</CreateGamesFormErrors>
                     </CreateGamesItemsWrapper>
 
                     <CreateGamesItemsWrapper>
                         <label>Description: </label>
                         <CreateGamesInput type={'text'} onChange={onChange} name={'description'} value={input.description}/>
-                        <span>{error.description}</span>
+                        <CreateGamesFormErrors>{error.description}</CreateGamesFormErrors>
                     </CreateGamesItemsWrapper>
 
                     <CreateGamesItemsWrapper>
@@ -154,8 +156,8 @@ export default function CreateGame() {
 
                         <CreateGamesItemsWrapper>
                             <label>Rating: </label>
-                            <input type="text" onChange={onChange} name="rating" value={input.rating}/>
-                            <span>{error.rating}</span>
+                            <input type="number" min='1.0' max='5.0' step='.1' onChange={onChange} name="rating" value={input.rating}/>
+                            <CreateGamesFormErrors>{error.rating}</CreateGamesFormErrors>
                         </CreateGamesItemsWrapper>
                     </CreateGamesPairItemsWrapper>
 
@@ -171,7 +173,7 @@ export default function CreateGame() {
                                 )
                             })}
                         </CreateGamesCheckboxWrapper>
-                        <span>{error.platforms}</span>
+                        <CreateGamesFormErrors>{error.platforms}</CreateGamesFormErrors>
                     </CreateGamesItemsWrapper>
 
                     <CreateGamesItemsWrapper>
@@ -186,7 +188,7 @@ export default function CreateGame() {
                                 )
                             })}
                         </CreateGamesCheckboxWrapper>
-                        <span>{error.genres}</span>
+                        <CreateGamesFormErrors>{error.genres}</CreateGamesFormErrors>
                     </CreateGamesItemsWrapper>
 
                     <button type="submit">Submit</button>

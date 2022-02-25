@@ -13,10 +13,10 @@ function App() {
         <Route path='/' element={<NavBar/>}>
           <Route path='/games' element={<Games/>}/>
           <Route path='/games/:idCiudad' element={<GameDetail/>}/>
-          <Route path='/search/:name' element={<GamesByName/>}/>
+          <Route path='/search/:name' element={<GamesByName/>}/> 
+          <Route path='/create' element={<CreateGame/>}/>
         </Route>
         <Route path='/navbar' element={<NavBar/>}/>
-        <Route path='/create' element={<CreateGame/>}/>
         <Route index element={<LandingPage/>}/>
       </Routes>
   );

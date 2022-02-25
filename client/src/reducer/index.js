@@ -39,8 +39,8 @@ function rootReducer(state = initialState, action) {
         case ORDER_BY_NAME:
             var sortByName = []
 
-            if(action.payload === 'ASC') sortByName = [...state.games.sort((a, b) => {return a.name < b.name ? -1 : 0})]
-            else if(action.payload === 'DESC') sortByName = [...state.games.sort((a, b) => {return a.name > b.name ? -1 : 0})]
+            if(action.payload === 'ASC') sortByName = [...state.games.sort((a, b) => {return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 0})]
+            else if(action.payload === 'DESC') sortByName = [...state.games.sort((a, b) => {return a.name.toLowerCase() > b.name.toLowerCase() ? -1 : 0})]
             else sortByName = state.games
 
             return {

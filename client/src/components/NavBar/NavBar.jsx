@@ -14,6 +14,11 @@ export default function NavBar() {
         setName('');
     };
 
+    function onClick(event) {
+        event.target.classList.toggle('active')
+        console.log(event.target.classList)
+    }
+
     return (
         <React.Fragment>
             <NavWrapper>
@@ -21,7 +26,7 @@ export default function NavBar() {
                     <NavLogo src={Logo} alt='Logo'/>
                 </NavLink>
                 <NavLink to={'/games'}>
-                    <NavButton>Home</NavButton>
+                    <NavButton onClick={(event) => onClick(event)}>Home</NavButton>
                 </NavLink>
                 <NavLink to={'/create'}>
                     <NavButton>Create Game</NavButton>
