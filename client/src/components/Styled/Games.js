@@ -11,21 +11,6 @@ export const GamesWrapper = styled.div`
     max-width: 100vw;
 `
 
-export const GamesFiltersWrapper = styled.div`
-    display: flex;
-    margin-top: 10px;
-`
-
-export const GamesSelects = styled.select`
-    margin-left: 2.5px;
-    margin-right: 2.5px;
-    font-family: "Cascadia Code",Consolas,Monaco,"Andale Mono","Ubuntu Mono",monospace;
-    font-size: 15px;
-    background-color: rgba(0, 0, 0, 0.85);
-    color: white;
-    border-color: #00D1FF;
-`
-
 export const GamesCard = styled.div`
     display: grid;
     grid-auto-columns: auto;
@@ -36,4 +21,31 @@ export const GamesCard = styled.div`
     align-items: center;
     grid-template-areas:
         ". . .";
+`
+
+export const GamesTitleWrapper = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    width: 96vw;
+    grid-template-areas: 
+        ". a .";
+    margin-bottom: 15px;
+    
+    & > .Paginate{
+        align-self: center;
+        justify-self: start;
+    }
+
+    & > .Filter{
+        align-self: center;
+        justify-self: end;
+    }
+`
+
+export const GamesTitle = styled.div`
+    color: white;
+    align-self: center;
+    justify-self: center;
+    text-align: center;
 `

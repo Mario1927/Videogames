@@ -5,7 +5,8 @@ import { filterGamesByCreator, filterGamesByGenre, getGames, getGenres, sortGame
 import Pagination from "../../Pagination/Pagination";
 import Loanding from "../../Loading/Loading";
 import NotFound from "../../NotFound/NotFound";
-import { GamesCard, GamesFiltersWrapper, GamesSelects, GamesWrapper } from "../../Styled/Games";
+import { GamesCard, GamesTitle, GamesTitleWrapper, GamesWrapper, PaginationTop } from "../../Styled/Games";
+import Filters from "../../Filters/Filters";
 
 export default function Games() {
     const dispatch = useDispatch();
@@ -54,29 +55,19 @@ export default function Games() {
 
     return (
         <GamesWrapper>
-            <GamesFiltersWrapper>
-                <GamesSelects onChange={(event) => handlerFilterByGenre(event)}>
-                    <option value={'All'}>All</option>
-                    {genres.map(genre => {
-                        return <option key={genre.id} value={genre.name}>{genre.name}</option>
-                    })}
-                </GamesSelects>
-                <GamesSelects onChange={(event) => handlerFilterByCreated(event)}>
-                    <option value='All'>All</option>
-                    <option value={true}>Created</option>
-                    <option value={false}>Existing</option>
-                </GamesSelects>
-                <GamesSelects className="SortByName" onChange={(event) => handlerSortByName(event)}>
-                    <option value='None'>None</option>
-                    <option value='ASC'>Ascendent</option>
-                    <option value='DESC'>Descendent</option>
-                </GamesSelects>
-                <GamesSelects className="SortByRating" onChange={(event) => handlerSortByRating(event)}>
-                    <option value='None'>None</option>
-                    <option value='ASC'>Ascendent</option>
-                    <option value='DESC'>Descendent</option>
-                </GamesSelects>
-            </GamesFiltersWrapper>
+            <GamesTitleWrapper>
+                <div className="Paginate">
+                    <Pagination className="Paginate" gamesPerPage={gamesPerPage} totalGames={games.length} paginate={paginate}/>
+                </div>
+                <GamesTitle className="Title">
+                    <h1>Games Database</h1>
+                    <span>Over hundred games displayed and 500.000 searcheables</span>
+                </GamesTitle>
+                <div className="Filter">
+                   <Filters handlerFilterByGenre={handlerFilterByGenre} handlerFilterByCreated={handlerFilterByCreated} handlerSortByName={handlerSortByName} handlerSortByRating={handlerSortByRating} genres={genres}/> 
+                </div>
+            </GamesTitleWrapper>
+            
             <GamesCard>
                 {loading ? <Loanding/> : currentGames.length ? currentGames.map(game => <Game key={game.id} name={game.name} image={game.image} genres={game.genres.join(', ')} id={game.id} />) : <NotFound/>}
             </GamesCard>
