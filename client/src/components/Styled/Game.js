@@ -49,7 +49,6 @@ export const GameCardLink = styled(Link)`
 
 export const GameCardRating = styled.div`
     position: relative;
-    /* transform: translate(170px, -80px); */
     color: #00D1FF;
     background-color: rgba(0, 0, 0, 0.75);
     border-radius: 2px;
