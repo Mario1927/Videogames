@@ -19,12 +19,18 @@ export const PaginationButton = styled.button`
     font-weight: 600;
     letter-spacing: 1.2px;
     box-sizing: border-box;
-    transition: .3s;
+    transition: .2s;
 
     &:hover {
-    border-color: #06f;
+    border-color: #00D1FF;
     color: #06f;
     fill: #06f;
     cursor: pointer;
+    }
+
+    &.active {
+        color: #00D1FF;
+        border-color: #00D1FF;
+        transition: 0.05s;
     }
 `

@@ -1,7 +1,7 @@
 import React from 'react';
-import { GameCardName, GameCardWrapper, GameCardImg, GameCardGenres, GameCardLink } from '../../Styled/Game';
+import { GameCardName, GameCardWrapper, GameCardImg, GameCardGenres, GameCardLink, GameCardRating } from '../../Styled/Game';
 
-export default function Game({name, image, genres, id}) {
+export default function Game({name, image, genres, rating, id}) {
 
     return (
         <GameCardWrapper>
@@ -12,7 +12,8 @@ export default function Game({name, image, genres, id}) {
                 <GameCardImg src={image} alt='Game'/>
             </GameCardLink>
             <GameCardGenres>
-                {genres}
+                <React.Fragment>{genres}</React.Fragment>
+                <GameCardRating>{rating}</GameCardRating>
             </GameCardGenres>
         </GameCardWrapper>
     )

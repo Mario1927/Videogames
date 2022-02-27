@@ -56,7 +56,7 @@ export default function CreateGame() {
         
         switch (input) {
             case 'name':
-                if(!/.*\S.*/.test(value)){
+                if(!/^[A-Za-z0-9\u00C0-\u017F ]+$/.test(value)){
                     return setError({...error, name: 'Not special characters or leading spaces'})
                 } else {
                     return setError({...error, name: ''})
@@ -68,6 +68,12 @@ export default function CreateGame() {
                 else {
                     return setError({...error, description: ''})
                 }
+            case 'image':
+                if(!/[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/ig.test(value)){
+                    return setError({...error, image: 'Invalid URL'})
+                } else {
+                    return setError({...error, image: ''})
+                };                
             case 'rating':
                 if(!/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/.test(value)){
                     return setError({...error, rating: 'Should only be numeric characters'})
@@ -103,7 +109,6 @@ export default function CreateGame() {
 
         return Object.values({...error, ...asignErrors}).filter(value => value !== '');
     }
-    const refForm = useRef(null);
 
     async function onSubmit(event) {
         event.preventDefault();
@@ -113,7 +118,7 @@ export default function CreateGame() {
             try {
                 await axios.post('http://localhost:3001/videogames/create', input)
                 alert('Game created sucesfully')
-                refForm.current.reset()
+                document.querySelector('.Form').reset();
             } catch (error) {
                 console.log(error)
             } 
@@ -130,7 +135,7 @@ export default function CreateGame() {
     return (
         <CreateGamesWrapper>
             <CreateGamesFormWrapper>
-                <CreateGamesForm ref={refForm} onSubmit={onSubmit}>
+                <CreateGamesForm className={'Form'} onSubmit={onSubmit}>
                     <CreateGamesItemsWrapper>
                         <label>Name: </label>
                         <CreateGamesInput type={'text'} onChange={onChange} name={'name'} value={input.name}/>
@@ -146,6 +151,7 @@ export default function CreateGame() {
                     <CreateGamesItemsWrapper>
                         <label>Image: </label>
                         <CreateGamesInput type="text" onChange={onChange} name="image" value={input.image}/>
+                        <CreateGamesFormErrors>{error.image}</CreateGamesFormErrors>
                     </CreateGamesItemsWrapper>
                     
                     <CreateGamesPairItemsWrapper>

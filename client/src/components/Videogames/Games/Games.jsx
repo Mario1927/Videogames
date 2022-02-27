@@ -5,7 +5,7 @@ import { filterGamesByCreator, filterGamesByGenre, getGames, getGenres, sortGame
 import Pagination from "../../Pagination/Pagination";
 import Loanding from "../../Loading/Loading";
 import NotFound from "../../NotFound/NotFound";
-import { GamesCard, GamesTitle, GamesTitleWrapper, GamesWrapper, PaginationTop } from "../../Styled/Games";
+import { GamesCard, GamesTitle, GamesTitleWrapper, GamesWrapper } from "../../Styled/Games";
 import Filters from "../../Filters/Filters";
 
 export default function Games() {
@@ -13,7 +13,7 @@ export default function Games() {
     const games = useSelector(state => state.games)
     const genres = useSelector(state => state.genres)
     const [currentPage, setCurrentPage] = useState(1);
-    const [gamesPerPage] = useState(15);
+    const [gamesPerPage] = useState(16);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -27,15 +27,27 @@ export default function Games() {
     const indexOfFirstGame = indexOfLastGame - gamesPerPage;
     const currentGames = games.slice(indexOfFirstGame, indexOfLastGame);
 
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const paginate = (pageNumber) => {
+        
+        setCurrentPage(pageNumber)
+
+        const previous = currentPage;
+
+        if(previous !== pageNumber){
+            document.querySelector(`.Button${previous}`).classList.toggle('active')
+            document.querySelector(`.Button${pageNumber}`).classList.toggle('active')
+        }
+    };
 
     function handlerSortByName(event) {
         dispatch(sortGamesByName(event.target.value))
+        paginate(1);
         document.querySelector('.SortByRating').selectedIndex = '0';
     }
 
     function handlerSortByRating(event) {
         dispatch(sortGamesByRating(event.target.value))
+        paginate(1);
         document.querySelector('.SortByName').selectedIndex = '0';
     }
 
@@ -43,14 +55,14 @@ export default function Games() {
         dispatch(filterGamesByGenre(event.target.value))
         document.querySelector('.SortByName').selectedIndex = '0';
         document.querySelector('.SortByRating').selectedIndex = '0';
-        setCurrentPage(1);
+        paginate(1);
     }
 
     function handlerFilterByCreated(event) {
         dispatch(filterGamesByCreator(event.target.value))
         document.querySelector('.SortByName').selectedIndex = '0';
         document.querySelector('.SortByRating').selectedIndex = '0';
-        setCurrentPage(1);
+        paginate(1);
     }
 
     return (
@@ -69,9 +81,9 @@ export default function Games() {
             </GamesTitleWrapper>
             
             <GamesCard>
-                {loading ? <Loanding/> : currentGames.length ? currentGames.map(game => <Game key={game.id} name={game.name} image={game.image} genres={game.genres.join(', ')} id={game.id} />) : <NotFound/>}
+                {loading ? <Loanding/> : currentGames.length ? currentGames.map(game => <Game key={game.id} name={game.name} image={game.image} genres={game.genres.join(', ')} rating={game.rating} id={game.id} />) : <NotFound/>}
             </GamesCard>
-            <Pagination gamesPerPage={gamesPerPage} totalGames={games.length} paginate={paginate}/>
+            {/* <Pagination gamesPerPage={gamesPerPage} totalGames={games.length} paginate={paginate}/> */}
         </GamesWrapper>
     )
 };

@@ -16,18 +16,19 @@ export const GamesCard = styled.div`
     grid-auto-columns: auto;
     grid-template-rows: 1fr;
     grid-auto-rows: 1fr;
-    gap: 0px 0px;
+    gap: 10px 15px;
     grid-auto-flow: row;
     align-items: center;
     grid-template-areas:
-        ". . .";
+        ". . . .";
+    margin-bottom: 5px;
 `
 
 export const GamesTitleWrapper = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: auto;
-    width: 96vw;
+    width: 80vw;
     grid-template-areas: 
         ". a .";
     margin-bottom: 15px;
@@ -40,6 +41,7 @@ export const GamesTitleWrapper = styled.div`
     & > .Filter{
         align-self: center;
         justify-self: end;
+        display: flex;
     }
 `
 

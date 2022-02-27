@@ -18,17 +18,13 @@ export const FilterSelects = styled.select`
     background-color: rgba(0, 0, 0, 0.85);
     color: white;
     border-color: #00D1FF;
+    border-radius: 3px;
+    width: 130px;
 `
 
 export const FilterWrapper = styled.div`
     display: flex;
     flex-direction: column;
-`
-
-export const FiltersButton = styled.button`
-    background: none;
-    border: none;
-    color: #00D1FF;
 `
 
 export const FilterLogo = styled.img`

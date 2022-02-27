@@ -60,6 +60,10 @@ export const CreateGamesItemsWrapper = styled.div`
     justify-content: center;
     align-items: center;
     padding-bottom: 10px;
+
+    & > label {
+        color: #00D1FF;
+    }
 `
 
 export const CreateGamesPairItemsWrapper = styled.div`

@@ -1,5 +1,5 @@
 import React from "react";
-import { FiltersWrapper, FilterSelects, FiltersButton, FilterWrapper, FilterLogo } from "../Styled/Filters";
+import { FiltersWrapper, FilterSelects, FilterWrapper, FilterLogo } from "../Styled/Filters";
 import FilterPNG from "../images/Filter.png";
 
 export default function Filters({handlerFilterByGenre, handlerFilterByCreated, handlerSortByName, handlerSortByRating, genres}) {
@@ -26,8 +26,6 @@ export default function Filters({handlerFilterByGenre, handlerFilterByCreated, h
                         <option value={true}>Created</option>
                         <option value={false}>Existing</option>
                     </FilterSelects>
-                </FilterWrapper>
-                <FilterWrapper>
                     <FilterSelects className="SortByName" onChange={(event) => handlerSortByName(event)}>
                         <option value='None'>Alphabetical</option>
                         <option value='ASC'>A-Z</option>
@@ -39,7 +37,6 @@ export default function Filters({handlerFilterByGenre, handlerFilterByCreated, h
                         <option value='DESC'>Descendent</option>
                     </FilterSelects>
                 </FilterWrapper>
-                
             </FiltersWrapper>
         </React.Fragment>
     )

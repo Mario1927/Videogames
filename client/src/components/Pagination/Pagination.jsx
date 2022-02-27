@@ -11,8 +11,9 @@ export default function Pagination({ gamesPerPage, totalGames, paginate }) {
 
     return (
         <PaginationWrapper>
-            {pageNumbers.map(number => (
-                <PaginationButton key={number} onClick={() => paginate(number)}>{number}</PaginationButton>
+            {pageNumbers.map(number => ( number === 1 ?
+                <PaginationButton key={number} className={`Button${number} active`} onClick={() => paginate(number)}>{number}</PaginationButton> :
+                <PaginationButton key={number} className={`Button${number}`} onClick={() => paginate(number)}>{number}</PaginationButton>
             ))}
         </PaginationWrapper>
     )
