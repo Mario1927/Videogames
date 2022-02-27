@@ -116,7 +116,7 @@ export default function CreateGame() {
 
         if(!flag.length){
             try {
-                await axios.post('http://localhost:3001/videogames/create', input)
+                await axios.post('/videogames/create', input)
                 alert('Game created sucesfully')
                 document.querySelector('.Form').reset();
             } catch (error) {
