@@ -19,7 +19,6 @@ export const PaginationButton = styled.button`
     font-weight: 600;
     letter-spacing: 1.2px;
     box-sizing: border-box;
-    transition: .2s;
 
     &:hover {
     border-color: #00D1FF;
@@ -31,6 +30,5 @@ export const PaginationButton = styled.button`
     &.active {
         color: #00D1FF;
         border-color: #00D1FF;
-        transition: 0.05s;
     }
 `

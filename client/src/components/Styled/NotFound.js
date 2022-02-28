@@ -11,6 +11,9 @@ export const NotFoundWrapper = styled.div`
 `
 
 export const NotFoundImg = styled.img`
+    display: block;
     width: 850px;
     height: 850px;
+    margin-left: auto;
+    margin-right: auto;
 `

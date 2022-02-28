@@ -6,14 +6,15 @@ export const LoadingWrapper = styled.div`
     display: block;
     justify-content: center;
     align-items: center;
-    top: 0;
-    left: 0;
-    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
 `
 
 export const LoadingImg = styled.img`
-    margin-top: 0px;
+    margin-top: 250px;
     margin-left: auto;
     margin-right: auto;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `

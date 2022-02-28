@@ -1,19 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { searchGameById } from '../../../actions/index.js';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { GameDetailWrapper, GameDetailImg, GameDetailDescription, GameDetailTitle, GameDetailWrapperOthers, GameDetailOthers } from '../../Styled/GameDetail.js';
+import NotFound from '../../NotFound/NotFound.jsx';
+import Loanding from '../../Loading/Loading.jsx';
 
 export default function GameDetail() {
     const dispatch = useDispatch();
     const state = useSelector(state => state.gameDetail)
     const { idCiudad } = useParams();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        dispatch(searchGameById(idCiudad))
+        dispatch(searchGameById(idCiudad)).then(() => setLoading(false)).catch(setLoading(false))
     }, [dispatch, idCiudad]);
 
     return (
+        loading ? <Loanding/> : !state.name ? <NotFound/> :
         <GameDetailWrapper>
             <GameDetailTitle>
                 {state.name}

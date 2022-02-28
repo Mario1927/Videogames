@@ -28,8 +28,6 @@ export default function Games() {
     const currentGames = games.slice(indexOfFirstGame, indexOfLastGame);
 
     const paginate = (pageNumber) => {
-        
-        setCurrentPage(pageNumber)
 
         const previous = currentPage;
 
@@ -37,6 +35,8 @@ export default function Games() {
             document.querySelector(`.Button${previous}`).classList.toggle('active')
             document.querySelector(`.Button${pageNumber}`).classList.toggle('active')
         }
+        
+        setCurrentPage(pageNumber)
     };
 
     function handlerSortByName(event) {
@@ -83,7 +83,6 @@ export default function Games() {
             <GamesCard>
                 {loading ? <Loanding/> : currentGames.length ? currentGames.map(game => <Game key={game.id} name={game.name} image={game.image} genres={game.genres.join(', ')} rating={game.rating} id={game.id} />) : <NotFound/>}
             </GamesCard>
-            {/* <Pagination gamesPerPage={gamesPerPage} totalGames={games.length} paginate={paginate}/> */}
         </GamesWrapper>
     )
 };

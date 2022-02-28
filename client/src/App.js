@@ -6,6 +6,8 @@ import LandingPage from './components/LandingPage/LandingPage';
 import NavBar from './components/NavBar/NavBar';
 import GamesByName from './components/Videogames/GamesByName/GamesByName';
 import CreateGame from './components/CreateGames/CreateGames';
+import NotFound from './components/NotFound/NotFound';
+import About from './components/About/About';
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
           <Route path='/games/:idCiudad' element={<GameDetail/>}/>
           <Route path='/search/:name' element={<GamesByName/>}/> 
           <Route path='/create' element={<CreateGame/>}/>
+          <Route path='/about' element={<About/>}/>
+          <Route path='*' element={<NotFound/>}/>
         </Route>
         <Route path='/navbar' element={<NavBar/>}/>
         <Route index element={<LandingPage/>}/>

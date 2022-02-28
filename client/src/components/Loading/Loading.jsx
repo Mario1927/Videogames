@@ -1,5 +1,5 @@
 import React from "react";
-import LoadingGIF from '../images/Loading.apng';
+import LoadingGIF from '../images/Loading2.apng';
 import { LoadingImg, LoadingWrapper } from "../Styled/Loading";
 
 export default function Loanding() {

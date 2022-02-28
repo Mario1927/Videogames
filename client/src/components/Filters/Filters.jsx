@@ -12,8 +12,8 @@ export default function Filters({handlerFilterByGenre, handlerFilterByCreated, h
 
     return (
         <React.Fragment>
-            <FilterLogo src={FilterPNG} alt="Filter" className="Logo" onClick={onClick}/>
-            <FiltersWrapper className="Filters">
+            <FilterLogo src={FilterPNG} alt="Filter" className="Logo active" onClick={onClick}/>
+            <FiltersWrapper className="Filters active">
                 <FilterWrapper>
                     <FilterSelects className="Genre" onChange={(event) => handlerFilterByGenre(event)}>
                     <option value={'All'}>Genres</option>

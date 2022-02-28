@@ -30,7 +30,7 @@ export const FilterWrapper = styled.div`
 export const FilterLogo = styled.img`
     display: block;
     width: 75px;
-    height: 75px;
+    height: 85px;
     margin-top: 5px;
     margin-left: auto;
     margin-right: auto;
