@@ -25,7 +25,6 @@ export default function CreateGame() {
         name: '',
         description: '',
         image: '',
-        releaseDate: '',
         rating: '',
         platforms: '',
         genres: ''
@@ -69,12 +68,18 @@ export default function CreateGame() {
                     return setError({...error, description: ''})
                 }
             case 'image':
-                if(!/[(http(s)?)://(www.)?a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/ig.test(value)){
+                if(value === ''){
+                    return setError({...error, image: ''})
+                }
+                else if(!/[(http(s)?)://(www.)?a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/ig.test(value)){
                     return setError({...error, image: 'Invalid URL'})
                 } else {
                     return setError({...error, image: ''})
                 };                
             case 'rating':
+                if(value === ''){
+                    return setError({...error, rating: ''})
+                }
                 if(!/^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)$/.test(value)){
                     return setError({...error, rating: 'Should only be numeric characters'})
                 }else if(parseFloat(value) < 1 || parseFloat(value) > 5){

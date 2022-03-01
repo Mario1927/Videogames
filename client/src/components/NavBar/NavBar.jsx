@@ -16,7 +16,6 @@ export default function NavBar() {
 
     function onClick(event) {
         event.target.classList.toggle('active')
-        console.log(event.target.classList)
     }
 
     return (
