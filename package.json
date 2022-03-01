@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "axios": "^0.25.0",
-    "validator": "^13.7.0"
-  }
-}

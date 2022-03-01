@@ -20,7 +20,6 @@ function App() {
           <Route path='/about' element={<About/>}/>
           <Route path='*' element={<NotFound/>}/>
         </Route>
-        <Route path='/navbar' element={<NavBar/>}/>
         <Route index element={<LandingPage/>}/>
       </Routes>
   );

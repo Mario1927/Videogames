@@ -4,7 +4,7 @@ import rootReducer from '../reducer/index.js';
 
 const store = createStore(
     rootReducer,
-    compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+    compose(applyMiddleware(thunk))
 );
 
 export default store;

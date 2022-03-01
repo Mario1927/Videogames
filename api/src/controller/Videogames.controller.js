@@ -165,26 +165,30 @@ const createGame = async (req, res, next) => {
 
     const {name, description, image, releaseDate, rating, genres, platforms} = req.body;
     
-    const createdGame = await Videogame.create({
-        name, 
-        description,
-        image,
-        releaseDate,
-        rating,
-        created: true
-    });
+    try {
+        const createdGame = await Videogame.create({
+            name, 
+            description,
+            image,
+            releaseDate,
+            rating,
+            created: true
+        });
 
-    genres.map(async genre => {
-        const genreBD = await Genre.findOne({where: {name: genre}});
-        await createdGame.addGenre(genreBD);
-    });
+        genres.map(async genre => {
+            const genreBD = await Genre.findOne({where: {name: genre}});
+            await createdGame.addGenre(genreBD);
+        });
 
-    platforms.map(async platform => {
-        const platformBD = await Platform.findOne({where: {name: platform}});
-        await createdGame.addPlatform(platformBD);
-    });
+        platforms.map(async platform => {
+            const platformBD = await Platform.findOne({where: {name: platform}});
+            await createdGame.addPlatform(platformBD);
+        });
 
-    return res.status(200).send('Game created succesfully');
+        return res.status(200).send('Game created succesfully'); 
+    } catch (error) {
+        return res.status(500).send('Game not created')
+    }
 };
 
 module.exports = {
