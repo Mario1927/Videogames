@@ -49,6 +49,9 @@ export default function CreateGame() {
             [event.target.name]: selected
         })
         
+        setError({
+            ...error, [event.target.name]: ''
+        })
     }
 
     function validate(input, value) {
