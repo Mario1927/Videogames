@@ -163,7 +163,9 @@ const getGameDetail = async (req, res, next) => {
 
 const createGame = async (req, res, next) => {
 
-    const {name, description, image, releaseDate, rating, genres, platforms} = req.body;
+    var {name, description, image, releaseDate, rating, genres, platforms} = req.body;
+
+    image = !image ? 'https://www.diariovivo.com/wp-content/uploads/2019/11/blog_game_on_feature_image_2019-750x450.jpg' : image;
     
     try {
         const createdGame = await Videogame.create({
