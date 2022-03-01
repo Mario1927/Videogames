@@ -11,7 +11,6 @@ export default function NavBar() {
 
     function submitHandler(event) {
         event.preventDefault();
-        setName('');
     };
 
     function onClick(event) {

@@ -5,7 +5,7 @@ import NotFoundPNG from "../images/NotFound.png";
 export default function NotFound() {
     return (
         <NotFoundWrapper>
-            <NotFoundImg src={NotFoundPNG} alt="Loading-GIF"></NotFoundImg>
+            <NotFoundImg src={NotFoundPNG} alt="Not-Found"></NotFoundImg>
         </NotFoundWrapper>
     )
 }
