@@ -49,7 +49,7 @@ export default function Filters() {
                     })}
                     </FilterSelects>
                     <FilterSelects className="Created" onChange={(event) => handlerFilterByCreated(event)}>
-                        <option value='All'>Origin</option>
+                        <option value='All'>Creator</option>
                         <option value={true}>Created</option>
                         <option value={false}>Existing</option>
                     </FilterSelects>
@@ -60,8 +60,8 @@ export default function Filters() {
                     </FilterSelects>
                     <FilterSelects className="SortByRating" onChange={(event) => handlerSortByRating(event)}>
                         <option value='None'>Rating</option>
-                        <option value='ASC'>Ascendent</option>
-                        <option value='DESC'>Descendent</option>
+                        <option value='DESC'>Highest</option>
+                        <option value='ASC'>Lowest</option>
                     </FilterSelects>
                 </FilterWrapper>
             </FiltersWrapper>
