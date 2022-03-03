@@ -5,50 +5,7 @@ const { Op } = require('sequelize');
 const { Videogame, Genre, Platform } = require('../db.js');
 
 const getAllGames = async (req, res, next) => {
-    if(req.query.name){
-        try {
-            const requestAPI = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&search=${req.query.name}`);
-            const requestBD = await Videogame.findAll({where: {
-                name: {
-                    [Op.iLike]: `%${req.query.name}%`
-                } 
-            }, include: Genre});
-
-            if(requestAPI || requestBD) {
-                
-                const requestFormated = requestAPI.data.results?.map(game => {
-                    return {
-                        name: game.name,
-                        image: game.background_image,
-                        id: game.id,
-                        genres: game.genres?.map(genre => genre.name),
-                        rating: game.rating,
-                        created: false
-                    }
-                });
-
-                const responseBD = requestBD?.map(game => {
-                    return {
-                        name: game.name,
-                        rating: game.rating,
-                        created: game.created,
-                        genres: game.genres?.map(genre => genre.name),
-                        image: game.image,
-                        id: game.id
-                    }
-                });
     
-                const results = [...responseBD, ...requestFormated]
-    
-                return res.json(results);
-            }
-            else {
-                return res.json('API Error');
-            }
-        } catch (error) {
-            next(error)
-        }
-    }else {
         try {
             var requestAPI = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}`);
             var requestBD = await Videogame.findAll({include: Genre});
@@ -95,8 +52,54 @@ const getAllGames = async (req, res, next) => {
         } catch (error) {
             next(error)
         }
-    }
+    
 };
+
+const getGamesByName = async (req, res, next) => {
+    
+    try {
+        const requestAPI = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&search=${req.query.name}`);
+        const requestBD = await Videogame.findAll({where: {
+            name: {
+                [Op.iLike]: `%${req.query.name}%`
+            } 
+        }, include: Genre});
+
+        if(requestAPI || requestBD) {
+            
+            const requestFormated = requestAPI.data.results?.map(game => {
+                return {
+                    name: game.name,
+                    image: game.background_image,
+                    id: game.id,
+                    genres: game.genres?.map(genre => genre.name),
+                    rating: game.rating,
+                    created: false
+                }
+            });
+
+            const responseBD = requestBD?.map(game => {
+                return {
+                    name: game.name,
+                    rating: game.rating,
+                    created: game.created,
+                    genres: game.genres?.map(genre => genre.name),
+                    image: game.image,
+                    id: game.id
+                }
+            });
+
+            const results = [...responseBD, ...requestFormated]
+
+            return res.json(results);
+        }
+        else {
+            return res.json('API Error');
+        }
+    } catch (error) {
+        next(error)
+    }
+}
 
 const getGameDetail = async (req, res, next) => {
     const id = req.params.idVideogame;
@@ -195,6 +198,7 @@ const createGame = async (req, res, next) => {
 
 module.exports = {
     getGameDetail,
+    getGamesByName,
     getAllGames,
     createGame
 }
