@@ -5,7 +5,7 @@ const router = Router();
 
 router.get('/', getAllGames);
 
-router.get('/name', getGamesByName);
+router.get('/name/:name', getGamesByName);
 
 router.get('/:idVideogame', getGameDetail);
 
