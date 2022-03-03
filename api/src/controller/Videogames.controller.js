@@ -7,78 +7,32 @@ const { Videogame, Genre, Platform } = require('../db.js');
 const getAllGames = async (req, res, next) => {
     
         try {
-            var requestAPI = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}`);
-            var requestBD = await Videogame.findAll({include: Genre});
+            var promisesAPI = [];
 
-            if(requestAPI || requestBD) {
-
-                let responseAPI = []; let requestFormated = [];
-
-                while (responseAPI.length < 100 && requestAPI.data.results) {
-                    
-                    requestFormated = requestAPI.data.results.map(game => {
-                        return {
-                            name: game.name,
-                            image: game.background_image,
-                            id: game.id,
-                            genres: game.genres.map(genre => genre.name),
-                            rating: game.rating,
-                            created: false
-                        }
-                    });
-                    responseAPI = [...responseAPI, ...requestFormated];
-                    requestAPI = await axios.get(requestAPI.data.next);
-                }
-
-                const responseBD = requestBD?.map(game => {
-                    
-                    return {
-                        name: game.name,
-                        rating: game.rating,
-                        created: game.created,
-                        genres: game.genres?.map(genre => genre.name),
-                        image: game.image,
-                        id: game.id
-                    }
-                })
-                
-                const results = [...responseBD, ...responseAPI];
-
-                return res.json(results);
+            for(let i = 1; i <= 5; i++){
+                promisesAPI.push(axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`));
             }
-            else {
-                return res.json('API Error');
-            }
-        } catch (error) {
-            next(error)
-        }
-    
-};
 
-const getGamesByName = async (req, res, next) => {
-    
-    try {
-        const requestAPI = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&search=${req.query.name}`);
-        const requestBD = await Videogame.findAll({where: {
-            name: {
-                [Op.iLike]: `%${req.query.name}%`
-            } 
-        }, include: Genre});
+            var promisesBD = Videogame.findAll({include: Genre});
 
-        if(requestAPI || requestBD) {
-            
-            const requestFormated = requestAPI.data.results?.map(game => {
+            var responseAPIPromises = await Promise.all([...promisesAPI, promisesBD])
+            var responsePromiseBD = responseAPIPromises.pop();
+
+            let responseAPI = []; let responseBD = [];
+
+            responseAPIPromises.forEach(response => responseAPI = [...responseAPI, ...response.data.results?.map(game => {
                 return {
                     name: game.name,
                     image: game.background_image,
                     id: game.id,
-                    genres: game.genres?.map(genre => genre.name),
+                    genres: game.genres.map(genre => genre.name),
                     rating: game.rating,
                     created: false
                 }
-            });
+            })]
+            )
 
-            const responseBD = requestBD?.map(game => {
+            responseBD = responsePromiseBD?.map(game => {
                 return {
                     name: game.name,
                     rating: game.rating,
@@ -87,15 +41,55 @@ const getGamesByName = async (req, res, next) => {
                     image: game.image,
                     id: game.id
                 }
-            });
+            })
 
-            const results = [...responseBD, ...requestFormated]
-
+            const results = [...responseBD, ...responseAPI];
             return res.json(results);
+        } catch (error) {
+            next(error)
         }
-        else {
-            return res.json('API Error');
+};
+
+const getGamesByName = async (req, res, next) => {
+    
+    try {
+        const promiseAPI = axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&search=${req.params.name}`);
+        const promiseBD = Videogame.findAll({where: {
+            name: {
+                [Op.iLike]: `%${req.params.name}%`
+            } 
+        }, include: Genre});
+
+        var responseAPIPromises = await Promise.all([promiseAPI, promiseBD]);
+        var responsePromiseBD = responseAPIPromises.pop();
+
+        let responseAPI = []; let responseBD = [];
+
+        responseAPI = responseAPIPromises[0].data.results?.map(game => {
+        return {
+            name: game.name,
+            image: game.background_image,
+            id: game.id,
+            genres: game.genres?.map(genre => genre.name),
+            rating: game.rating,
+            created: false
         }
+        });
+
+        responseBD = responsePromiseBD?.map(game => {
+            return {
+                name: game.name,
+                rating: game.rating,
+                created: game.created,
+                genres: game.genres?.map(genre => genre.name),
+                image: game.image,
+                id: game.id
+            }
+        });
+
+        const results = [...responseBD, ...responseAPI]
+        return res.json(results);
+
     } catch (error) {
         next(error)
     }
@@ -192,7 +186,8 @@ const createGame = async (req, res, next) => {
 
         return res.status(200).send('Game created succesfully'); 
     } catch (error) {
-        return res.status(500).send('Game not created')
+        res.status(500).send('Game not created');
+        next(error);
     }
 };
 
