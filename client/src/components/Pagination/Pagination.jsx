@@ -1,7 +1,7 @@
 import React from "react";
 import { PaginationButton, PaginationWrapper } from "../Styled/Pagination";
 
-export default function Pagination({ gamesPerPage, totalGames, paginate }) {
+export default function Pagination({ gamesPerPage, totalGames, currentPage, setCurrentPage, loading }) {
 
     const pageNumbers = [];
 
@@ -9,11 +9,22 @@ export default function Pagination({ gamesPerPage, totalGames, paginate }) {
         pageNumbers.push(i);
     }
 
+    if(!loading){
+        var buttons = document.querySelectorAll(`.PagButton`);
+        buttons?.forEach(button => button.classList.remove('active'));
+
+        var button = document.querySelector(`.B${currentPage}`);
+        button?.classList.add('active');
+    }
+   
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber)
+    };
+
     return (
         <PaginationWrapper>
-            {pageNumbers.map(number => ( number === 1 ?
-                <PaginationButton key={number} className={`Button${number} active`} onClick={() => paginate(number)}>{number}</PaginationButton> :
-                <PaginationButton key={number} className={`Button${number}`} onClick={() => paginate(number)}>{number}</PaginationButton>
+            {pageNumbers.map(number => (
+                <PaginationButton key={number} className={`PagButton B${number}`} onClick={() => paginate(number)}>{number}</PaginationButton>
             ))}
         </PaginationWrapper>
     )

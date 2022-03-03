@@ -1,13 +1,40 @@
 import React from "react";
 import { FiltersWrapper, FilterSelects, FilterWrapper, FilterLogo } from "../Styled/Filters";
+import { filterGamesByCreator, filterGamesByGenre, sortGamesByName, sortGamesByRating } from '../../actions/index';
 import FilterPNG from "../images/Filter.png";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function Filters({handlerFilterByGenre, handlerFilterByCreated, handlerSortByName, handlerSortByRating, genres}) {
+export default function Filters() {
+
+    const dispatch = useDispatch();
+    const genres = useSelector(state => state.genres);
 
     function onClick(event){
         event.preventDefault();
         document.querySelector(`.Logo`).classList.toggle('active')
         document.querySelector(`.Filters`).classList.toggle('active')
+    }
+
+    function handlerSortByName(event) {
+        dispatch(sortGamesByName(event.target.value))
+        document.querySelector('.SortByRating').selectedIndex = '0';
+    }
+
+    function handlerSortByRating(event) {
+        dispatch(sortGamesByRating(event.target.value))
+        document.querySelector('.SortByName').selectedIndex = '0';
+    }
+
+    function handlerFilterByGenre(event) {
+        dispatch(filterGamesByGenre(event.target.value))
+        document.querySelector('.SortByName').selectedIndex = '0';
+        document.querySelector('.SortByRating').selectedIndex = '0';
+    }
+
+    function handlerFilterByCreated(event) {
+        dispatch(filterGamesByCreator(event.target.value))
+        document.querySelector('.SortByName').selectedIndex = '0';
+        document.querySelector('.SortByRating').selectedIndex = '0';
     }
 
     return (
