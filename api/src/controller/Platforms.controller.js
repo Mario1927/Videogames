@@ -22,7 +22,7 @@ const getAllPlatforms = async (req, res, next) => {
 
             res.json(results);
         }else {
-            return res.status(404).send('API Error')
+            return res.status(500).send('API Error')
         }
     } catch (error) {
         next(error)
