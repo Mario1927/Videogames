@@ -20,7 +20,7 @@ const getAllGames = async (req, res, next) => {
 
             let responseAPI = []; let responseBD = [];
 
-            responseAPIPromises.forEach(response => responseAPI = [...responseAPI, ...response.data.results?.map(game => {
+            responseAPIPromises.forEach(promiseResponse => responseAPI = [...responseAPI, ...promiseResponse.data.results?.map(game => {
                 return {
                     name: game.name,
                     image: game.background_image,
@@ -60,12 +60,11 @@ const getGamesByName = async (req, res, next) => {
             } 
         }, include: Genre});
 
-        var responseAPIPromises = await Promise.all([promiseAPI, promiseBD]);
-        var responsePromiseBD = responseAPIPromises.pop();
+        var [responseAPIPromises, responsePromiseBD] = await Promise.all([promiseAPI, promiseBD]);
 
         let responseAPI = []; let responseBD = [];
 
-        responseAPI = responseAPIPromises[0].data.results?.map(game => {
+        responseAPI = responseAPIPromises.data.results?.map(game => {
         return {
             name: game.name,
             image: game.background_image,
@@ -161,6 +160,7 @@ const getGameDetail = async (req, res, next) => {
 const createGame = async (req, res, next) => {
 
     var {name, description, image, releaseDate, rating, genres, platforms} = req.body;
+    name = name.replace(/\s{2,}/g, ' '); description = description.replace(/\s{2,}/g, ' ');
 
     image = !image ? 'https://www.diariovivo.com/wp-content/uploads/2019/11/blog_game_on_feature_image_2019-750x450.jpg' : image;
     
