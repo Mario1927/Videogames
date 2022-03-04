@@ -62,7 +62,7 @@ export default function CreateGame() {
                     return setError({...error, name: ''})
                 }
                 if(!/^[A-Za-z0-9\u00C0-\u017F ]+$/.test(value)){
-                    return setError({...error, name: 'Not special characters or leading spaces'})
+                    return setError({...error, name: 'Not special characters'})
                 } else {
                     return setError({...error, name: ''})
                 };
