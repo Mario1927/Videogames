@@ -58,13 +58,19 @@ export default function CreateGame() {
         
         switch (input) {
             case 'name':
+                if(value === '') {
+                    return setError({...error, name: ''})
+                }
                 if(!/^[A-Za-z0-9\u00C0-\u017F ]+$/.test(value)){
                     return setError({...error, name: 'Not special characters or leading spaces'})
                 } else {
                     return setError({...error, name: ''})
                 };
             case 'description':
-                if(value.length < 10) {
+                if(value === '') {
+                    return setError({...error, description: ''})
+                }
+                if(value.replace(/\s/g, '').length < 10) {
                     return setError({...error, description: 'At least ten characters required'})
                 }
                 else {
