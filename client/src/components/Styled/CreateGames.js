@@ -73,5 +73,5 @@ export const CreateGamesPairItemsWrapper = styled.div`
 `
 
 export const CreateGamesFormErrors = styled.span`
-    color: #00D1FF;
+    color: red;
 `
