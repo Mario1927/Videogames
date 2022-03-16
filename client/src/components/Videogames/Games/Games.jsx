@@ -42,8 +42,6 @@ export default function Games() {
                    <Filters /> 
                 </div>
             </GamesTitleWrapper>
-            
-            
             <div className="GamesTitleResponsive">
                 <GamesTitle className="Title">
                     <h1>Games Database</h1>
@@ -51,11 +49,10 @@ export default function Games() {
                 <Pagination className="Paginate" gamesPerPage={gamesPerPage} totalGames={games.length} currentPage={currentPage} setCurrentPage={setCurrentPage} loading={loading}/>
                 <Filters className="Filter"/>
             </div>
-            
-
             <GamesCard>
                 {loading ? <Loanding/> : currentGames.length ? currentGames.map(game => <Game key={game.id} name={game.name} image={game.image} genres={game.genres.join(', ')} rating={game.rating} id={game.id} />) : <NotFound/>}
             </GamesCard>
+            <Pagination className="Paginate" gamesPerPage={gamesPerPage} totalGames={games.length} currentPage={currentPage} setCurrentPage={setCurrentPage} loading={loading}/>
         </GamesWrapper>
     )
 };

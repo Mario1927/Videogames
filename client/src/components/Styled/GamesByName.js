@@ -12,4 +12,24 @@ export const GamesByNameWrapper = styled.div`
     align-items: center;
     justify-content: center;
     width: 100vw;
+
+    @media (max-width: 1500px) {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas:
+        ". . .";
+    }
+
+    @media (max-width: 1200px) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+        ". .";
+    }
+
+    @media (max-width: 800px) {
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+    }
 `

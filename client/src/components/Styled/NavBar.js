@@ -10,7 +10,7 @@ export const NavWrapper = styled.div`
     background-color: rgba(0, 0, 0, 0.7);
     align-content: center;
 
-    @media (max-width: 800px) {
+    @media (max-width: 1000px) {
         grid-template-columns: 15% 70% 15%
     }
 `
@@ -18,7 +18,7 @@ export const NavWrapper = styled.div`
 export const NavLinkWrapper = styled(NavWrapper)`
     grid-template-columns: 1fr 1fr 1fr;
 
-    @media (max-width: 800px) {
+    @media (max-width: 1000px) {
         display: none;
     }
 `
@@ -26,7 +26,7 @@ export const NavLinkWrapper = styled(NavWrapper)`
 export const NavLogo = styled.img`
     height: 40px;
 
-    @media (max-width: 800px) {
+    @media (max-width: 1000px) {
         width: 40px;
     }
 `
@@ -54,7 +54,7 @@ export const NavButton = styled.button`
 export const NavInputButton = styled(NavButton)`
     color: #00D1FF;
 
-    @media (max-width: 800px) {
+    @media (max-width: 1000px) {
         display: none;
     }
 `
@@ -95,7 +95,7 @@ export const OpenLinksButton = styled.button`
     line-height: 55px;
     cursor: pointer;
 
-    @media (min-width: 800px) {
+    @media (min-width: 1000px) {
         display: none;
     }
 `
@@ -105,7 +105,7 @@ export const OpenDivWrapper = styled.div`
     display: flex;
     justify-content: center;
 
-    @media (min-width: 800px) {
+    @media (min-width: 1000px) {
         display: none;
     }
 `
