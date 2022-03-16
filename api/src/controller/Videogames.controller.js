@@ -1,7 +1,7 @@
 require('dotenv').config();
 const {API_KEY} = process.env;
 const axios = require('axios');
-const { Op } = require('sequelize');
+const { Op, Sequelize } = require('sequelize');
 const { Videogame, Genre, Platform } = require('../db.js');
 
 const getAllGames = async (req, res, next) => {
@@ -26,7 +26,7 @@ const getAllGames = async (req, res, next) => {
                     image: game.background_image,
                     id: game.id,
                     genres: game.genres.map(genre => genre.name),
-                    rating: game.rating,
+                    rating: game.rating.toFixed(1),
                     created: false
                 }
             })]
@@ -54,11 +54,15 @@ const getGamesByName = async (req, res, next) => {
     
     try {
         const promiseAPI = axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&search=${req.params.name}`);
-        const promiseBD = Videogame.findAll({where: {
-            name: {
-                [Op.iLike]: `%${req.params.name}%`
-            } 
-        }, include: Genre});
+
+        const promiseBD = Videogame.findAll({
+            where: {
+                name: {
+                    [Op.iLike]: `%${req.params.name}%`
+                }
+            },
+            include: [Genre]
+        });
 
         var [responseAPIPromises, responsePromiseBD] = await Promise.all([promiseAPI, promiseBD]);
 

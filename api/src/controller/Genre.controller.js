@@ -26,11 +26,11 @@ const createGenre = async (req, res, next) => {
 
   try {
     
-    const newGenre = await Genre.create({
-      name: name
+    const newGenre = await Genre.findOrCreate({
+      where: {
+        name: name
+      }
     });
-
-
 
     return res.status(200).send(newGenre);
 
