@@ -13,7 +13,7 @@ export default function Game({name, image, genres, rating, id}) {
             </GameCardLink>
             <GameCardGenres>
                 <React.Fragment>🔖{genres}</React.Fragment>
-                <GameCardRating>⭐{rating}</GameCardRating>
+                <GameCardRating>⭐{rating ? rating : 'N/A'}</GameCardRating>
             </GameCardGenres>
         </GameCardWrapper>
     )

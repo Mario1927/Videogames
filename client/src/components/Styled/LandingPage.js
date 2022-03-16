@@ -19,6 +19,7 @@ export const LandingTitle = styled.h1`
     font-family: "Cascadia Code",Consolas,Monaco,"Andale Mono","Ubuntu Mono",monospace;
     font-size: 50px;
     text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    text-align: center;
 `
 
 export const LandingLink = styled(Link)`
