@@ -17,7 +17,7 @@ export function getPlatforms() {
 
 export function searchGamesByName(name) {
     return async function(dispatch) {
-        const response = await axios.get(`/videogames/name/:${name}`)
+        const response = await axios.get(`/videogames/name/${name}`)
         return dispatch({type: GET_GAMES_BY_NAME, payload: response.data})
     }
 }
