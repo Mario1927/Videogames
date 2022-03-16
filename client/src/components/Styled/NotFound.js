@@ -3,17 +3,18 @@ import styled from "styled-components";
 export const NotFoundWrapper = styled.div`
     width: 100%;
     height: 100%;
-    position: grid;
+    display: flex;
     justify-content: center;
     align-items: center;
-    top: 0;
-    left: 0;
 `
 
 export const NotFoundImg = styled.img`
-    display: block;
-    width: 850px;
-    height: 850px;
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 70%;
+    margin: auto;
+    position: absolute;
+    top: 30%;
 `
