@@ -7,21 +7,52 @@ export const GamesWrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100vw;
-    max-width: 100vw;
+    width: 100%;
+    
+    @media (max-width: 800px) {
+        & .GamesTitleWrapper {
+            display: none;
+        }
+    }
+
+    @media (min-width: 800px) {
+        & .GamesTitleResponsive {
+            display: none;
+        }
+    }
 `
 
 export const GamesCard = styled.div`
     display: grid;
-    grid-auto-columns: auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr;
     grid-auto-rows: 1fr;
-    gap: 10px 15px;
+    gap: 10px 10px;
     grid-auto-flow: row;
     align-items: center;
     grid-template-areas:
         ". . . .";
     margin-bottom: 5px;
+
+    @media (max-width: 1500px) {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas:
+        ". . .";
+    }
+
+    @media (max-width: 1200px) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+        ". .";
+    }
+
+    @media (max-width: 800px) {
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+    }
 `
 
 export const GamesTitleWrapper = styled.div`

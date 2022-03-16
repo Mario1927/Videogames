@@ -25,6 +25,12 @@ export const FilterSelects = styled.select`
 export const FilterWrapper = styled.div`
     display: flex;
     flex-direction: column;
+
+    @media (max-width: 800px) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
 `
 
 export const FilterLogo = styled.img`
@@ -43,5 +49,9 @@ export const FilterLogo = styled.img`
 
     &.active {
         border: 2px solid #00D1FF;
+    }
+
+    @media (max-width: 800px) {
+        display: none
     }
 `

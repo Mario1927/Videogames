@@ -43,15 +43,25 @@ export const CreateGamesInput = styled.input`
     ::placeholder{
         color: lightgray;
     }
+
+    @media (max-width: 800px) {
+        width: 80vw;
+    }
 `
 
 export const CreateGamesCheckboxWrapper = styled.div`
     display: grid;
     justify-items: center;
     align-items: center;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 2fr 1fr;
     grid-auto-rows: 1fr;
     grid-auto-flow: row;
+
+    @media (max-width: 800px) {
+        margin: auto;
+        justify-items: center;
+        grid-template-columns: 2fr 1fr;
+    }
 `
 
 export const CreateGamesItemsWrapper = styled.div`
@@ -63,6 +73,7 @@ export const CreateGamesItemsWrapper = styled.div`
 
     & > label {
         color: #00D1FF;
+        margin-bottom: 5px;
     }
 `
 

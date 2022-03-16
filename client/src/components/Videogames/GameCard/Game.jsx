@@ -12,8 +12,8 @@ export default function Game({name, image, genres, rating, id}) {
                 <GameCardImg src={image} alt='Game'/>
             </GameCardLink>
             <GameCardGenres>
-                <React.Fragment>{genres}</React.Fragment>
-                <GameCardRating>{rating}</GameCardRating>
+                <React.Fragment>🔖{genres}</React.Fragment>
+                <GameCardRating>⭐{rating}</GameCardRating>
             </GameCardGenres>
         </GameCardWrapper>
     )

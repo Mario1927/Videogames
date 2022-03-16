@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export const GameCardWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    width: 20vw;
+    width: 100%;
     color: white;
     align-items: center;
     border: 1px solid white;
@@ -19,8 +19,8 @@ export const GameCardName = styled.h2`
 `
 
 export const GameCardImg = styled.img`
-    width: 20vw;
-    height: 25vh;
+    width: 100%;
+    height: auto;
     border: 1px solid white;
     border-radius: 5px;
 
@@ -28,6 +28,12 @@ export const GameCardImg = styled.img`
         border: 2px solid red;
         opacity: 0.9;
     }
+
+    @media (min-width: 800px) {
+        height: 300px;
+    }
+
+    
 `
 
 export const GameCardGenres = styled.div`
@@ -35,16 +41,17 @@ export const GameCardGenres = styled.div`
     font-size: 15px;
     display: grid;
     grid-template-columns: 5fr 1fr;
-    width: 100%;
+    width: auto;
     height: 35px;
     align-items: center;
-    justify-items: left;
-    margin-left: 15px;
+    justify-items: center;
+    margin-left: 0px;
     color: #00D1FF;
 `
 
 export const GameCardLink = styled(Link)`
     text-decoration: none;
+    width: 100%;
 `
 
 export const GameCardRating = styled.div`

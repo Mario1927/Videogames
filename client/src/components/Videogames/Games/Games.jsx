@@ -12,7 +12,7 @@ export default function Games() {
     const dispatch = useDispatch();
     const games = useSelector(state => state.games)
     const [currentPage, setCurrentPage] = useState(1);
-    const [gamesPerPage] = useState(16);
+    const [gamesPerPage] = useState(15);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -30,7 +30,7 @@ export default function Games() {
 
     return (
         <GamesWrapper>
-            <GamesTitleWrapper>
+            <GamesTitleWrapper className="GamesTitleWrapper">
                 <div className="Paginate">
                     <Pagination className="Paginate" gamesPerPage={gamesPerPage} totalGames={games.length} currentPage={currentPage} setCurrentPage={setCurrentPage} loading={loading}/>
                 </div>
@@ -43,6 +43,16 @@ export default function Games() {
                 </div>
             </GamesTitleWrapper>
             
+            
+            <div className="GamesTitleResponsive">
+                <GamesTitle className="Title">
+                    <h1>Games Database</h1>
+                </GamesTitle>
+                <Pagination className="Paginate" gamesPerPage={gamesPerPage} totalGames={games.length} currentPage={currentPage} setCurrentPage={setCurrentPage} loading={loading}/>
+                <Filters className="Filter"/>
+            </div>
+            
+
             <GamesCard>
                 {loading ? <Loanding/> : currentGames.length ? currentGames.map(game => <Game key={game.id} name={game.name} image={game.image} genres={game.genres.join(', ')} rating={game.rating} id={game.id} />) : <NotFound/>}
             </GamesCard>

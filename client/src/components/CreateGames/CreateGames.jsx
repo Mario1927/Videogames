@@ -133,6 +133,7 @@ export default function CreateGame() {
                 await axios.post('/videogames/create', input)
                 alert('Game created sucesfully')
                 document.querySelector('.Form').reset();
+                window.location.reload(false);
             } catch (error) {
                 console.log(error)
             } 
@@ -151,43 +152,30 @@ export default function CreateGame() {
             <CreateGamesFormWrapper>
                 <CreateGamesForm className={'Form'} onSubmit={onSubmit}>
                     <CreateGamesItemsWrapper>
-                        <label>Name: </label>
+                        <label>N A M E 🅰</label>
                         <CreateGamesInput type={'text'} onChange={onChange} name={'name'} value={input.name}/>
                         <CreateGamesFormErrors>{error.name}</CreateGamesFormErrors>
                     </CreateGamesItemsWrapper>
 
                     <CreateGamesItemsWrapper>
-                        <label>Description: </label>
+                        <label>D E S C R I P T I O N 💭</label>
                         <CreateGamesInput type={'text'} onChange={onChange} name={'description'} value={input.description}/>
                         <CreateGamesFormErrors>{error.description}</CreateGamesFormErrors>
                     </CreateGamesItemsWrapper>
 
                     <CreateGamesItemsWrapper>
-                        <label>Image: </label>
+                        <label>I M A G E 📸</label>
                         <CreateGamesInput type="text" onChange={onChange} name="image" value={input.image}/>
                         <CreateGamesFormErrors>{error.image}</CreateGamesFormErrors>
                     </CreateGamesItemsWrapper>
-                    
-                    <CreateGamesPairItemsWrapper>
-                        <CreateGamesItemsWrapper>
-                            <label>Released: </label>
-                            <input type={'date'} onChange={onChange} name={'releaseDate'} value={input.releaseDate}/>
-                        </CreateGamesItemsWrapper>
-
-                        <CreateGamesItemsWrapper>
-                            <label>Rating: </label>
-                            <input type="number" min='1.0' max='5.0' step='.1' onChange={onChange} name="rating" value={input.rating}/>
-                            <CreateGamesFormErrors>{error.rating}</CreateGamesFormErrors>
-                        </CreateGamesItemsWrapper>
-                    </CreateGamesPairItemsWrapper>
 
                     <CreateGamesItemsWrapper>
-                        <label>Platforms: </label>
+                        <label>P L A T F O R M S 🎮</label>
                         <CreateGamesCheckboxWrapper>
                             {platforms.map(platform => {
                                 return (
                                     <React.Fragment key={platform.name}>
-                                        <label key={platform.name}> {platform.name}</label>
+                                        <label key={platform.name}>{platform.name}</label>
                                         <input type={'checkbox'} onChange={onSelect} name={'platforms'} key={platform.id} value={platform.name}></input>
                                     </React.Fragment>
                                 )
@@ -197,12 +185,12 @@ export default function CreateGame() {
                     </CreateGamesItemsWrapper>
 
                     <CreateGamesItemsWrapper>
-                        <label>Genres: </label>
+                        <label>G E N R E S 🔖</label>
                         <CreateGamesCheckboxWrapper>
                             {genres.map(genre => {
                                 return (
                                     <React.Fragment key={genre.name}>
-                                        <label key={genre.name}> {genre.name}</label>
+                                        <label key={genre.name}>{genre.name}</label>
                                         <input type={'checkbox'} onChange={onSelect} name={'genres'} key={genre.id} value={genre.name}></input>
                                     </React.Fragment>
                                 )
@@ -210,6 +198,19 @@ export default function CreateGame() {
                         </CreateGamesCheckboxWrapper>
                         <CreateGamesFormErrors>{error.genres}</CreateGamesFormErrors>
                     </CreateGamesItemsWrapper>
+
+                    <CreateGamesPairItemsWrapper>
+                        <CreateGamesItemsWrapper>
+                            <label>RELEASED 📆</label>
+                            <input type={'date'} onChange={onChange} name={'releaseDate'} value={input.releaseDate}/>
+                        </CreateGamesItemsWrapper>
+
+                        <CreateGamesItemsWrapper>
+                            <label>RATING ⭐</label>
+                            <input type="number" min='1.0' max='5.0' step='.1' onChange={onChange} name="rating" value={input.rating}/>
+                            <CreateGamesFormErrors>{error.rating}</CreateGamesFormErrors>
+                        </CreateGamesItemsWrapper>
+                    </CreateGamesPairItemsWrapper>
 
                     <button type="submit">Submit</button>
                 </CreateGamesForm>
